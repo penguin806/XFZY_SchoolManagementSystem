@@ -14,10 +14,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <meta name="description" content="XFZY教学管理系统 - 主页">
+    <meta name="description" content="XFZY教学管理系统">
     <meta name="author" content="Snow admin@xuefeng.space">
     <meta name="keyword" content="Snow XFZY School Management 教学管理">
-    <title>XFZY教学管理系统 - 主页</title>
+    <title>XFZY教学管理系统 - 教职工管理</title>
     <!-- Icons-->
     <link rel="icon" type="image/ico" href="./img/favicon.ico" sizes="any" />
     <link href="vendors/@coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
@@ -120,6 +120,68 @@
         <div class="container-fluid mt-4">
             <div class="animated fadeIn">
 
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fa fa-align-justify"></i> Combined All Table</div>
+                            <div class="card-body">
+                                <table class="table table-responsive-sm table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Date registered</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Vishnu Serghei</td>
+                                        <td>2012/01/01</td>
+                                        <td>Member</td>
+                                        <td>
+                                            <span class="badge badge-success">Active</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Zbyněk Phoibos</td>
+                                        <td>2012/02/01</td>
+                                        <td>Staff</td>
+                                        <td>
+                                            <span class="badge badge-danger">Banned</span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <nav>
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">Prev</a>
+                                        </li>
+                                        <li class="page-item active">
+                                            <a class="page-link" href="#">1</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">2</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">3</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">4</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">Next</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.col-->
+                </div>
+
 
             </div>
         </div>
@@ -151,5 +213,12 @@
 <script src="vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/js/custom-tooltips.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/snow_custom.js"></script>
+<script>
+    $(document).ready(
+        function () {
+
+        }
+    );
+</script>
 </body>
 </html>

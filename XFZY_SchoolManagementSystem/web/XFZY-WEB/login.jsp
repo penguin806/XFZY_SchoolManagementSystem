@@ -76,6 +76,7 @@
 <script src="vendors/pace-progress/js/pace.min.js"></script>
 <script src="vendors/perfect-scrollbar/js/perfect-scrollbar.min.js"></script>
 <script src="vendors/@coreui/coreui/js/coreui.min.js"></script>
+<script src="js/snow_custom.js"></script>
 <script>
     $(document).ready(
         function () {

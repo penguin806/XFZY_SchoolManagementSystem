@@ -1,23 +1,37 @@
 package space.xuefeng.xfzy.model;
 
 public class User {
-    private int userId;
+    private String userId;
     private String userName;
     private String userPassword;
     private String userEmail;
     private String userRole;
     private String userRemarks;
 
+    private UserInfo user_Info;
+
     public User(String userName, String userPassword) {
         this.userName = userName;
         this.userPassword = userPassword;
+        this.user_Info = null;
     }
 
-    public int getUserId() {
+    public User(String userId, String userName, String userPassword, String userEmail, String userRole, String userRemarks, UserInfo user_Info) {
+        this.userId = userId;
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.userEmail = userEmail;
+        this.userRole = userRole;
+        this.userRemarks = userRemarks;
+
+        this.user_Info = user_Info;
+    }
+
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -59,5 +73,13 @@ public class User {
 
     public void setUserRemarks(String userRemarks) {
         this.userRemarks = userRemarks;
+    }
+
+    public UserInfo getUser_Info() {
+        return user_Info;
+    }
+
+    public void setUser_Info(UserInfo user_Info) {
+        this.user_Info = user_Info;
     }
 }
