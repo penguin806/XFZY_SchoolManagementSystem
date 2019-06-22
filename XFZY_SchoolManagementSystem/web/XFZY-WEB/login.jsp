@@ -57,6 +57,11 @@
                                 </div>
                             </div>
                         </form>
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div id="errorMessage" class="alert alert-danger mb-0" role="alert">${error}</div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -80,6 +85,14 @@
                     window.location.href = 'register.jsp';
                 }
             );
+
+            if($('#errorMessage').text() !== "")
+            {
+                $('#errorMessage').fadeIn();
+            }
+            else {
+                $('#errorMessage').hide();
+            }
         }
     );
 </script>
