@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
 
             } else {
                 HttpSession currentHttpSession = request.getSession();
-                currentHttpSession.setAttribute("LoginSuccessUser", loginUser.getUserName());
+                currentHttpSession.setAttribute("loginSuccessUser", loginUser.getUserName());
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
 

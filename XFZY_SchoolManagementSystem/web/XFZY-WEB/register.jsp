@@ -58,9 +58,32 @@
                         </div>
                         <input class="form-control" type="password" placeholder="重复输入密码">
                     </div>
-                    <button class="btn btn-block btn-success" type="button">注册</button>
+                    <button id="registerButton" class="btn btn-block btn-success" data-toggle="modal" data-target="#registerNotAllowedModal" type="button">注册</button>
                 </div>
             </div>
+
+<%--            暂停注册--%>
+            <div class="modal fade" id="registerNotAllowedModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">注册暂未开放</h4>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>请联系管理员: <a href="mailto:admin@xuefeng.space">admin@xuefeng.space</a></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="registerNotAllowedModalCloseButton" class="btn btn-secondary" type="button" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content-->
+                </div>
+                <!-- /.modal-dialog-->
+            </div>
+
         </div>
     </div>
 </div>
@@ -71,5 +94,17 @@
 <script src="vendors/pace-progress/js/pace.min.js"></script>
 <script src="vendors/perfect-scrollbar/js/perfect-scrollbar.min.js"></script>
 <script src="vendors/@coreui/coreui/js/coreui.min.js"></script>
+<script>
+    $(document).ready(
+        function () {
+            $('#registerNotAllowedModalCloseButton').on(
+                'click',
+                function () {
+                    window.location.href = 'login.jsp';
+                }
+            );
+        }
+    );
+</script>
 </body>
 </html>
