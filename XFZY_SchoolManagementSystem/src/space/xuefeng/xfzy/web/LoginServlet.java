@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 
-@WebServlet(name = "loginServlet", urlPatterns = { "/loginServlet" })
+@WebServlet(name = "loginServlet", urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
     DatabaseUtil dbUtil = new DatabaseUtil();
     UserLoginDao userLoginDao = new UserLoginDao();
@@ -50,7 +50,8 @@ public class LoginServlet extends HttpServlet {
 
             } else {
                 HttpSession currentHttpSession = request.getSession();
-                currentHttpSession.setAttribute("loginSuccessUser", loginUser.getUserName());
+                currentHttpSession.setAttribute("currentUser", loginUser.getUserName());
+                currentHttpSession.setAttribute("currentRole", loginUser.getUserRole());
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
 

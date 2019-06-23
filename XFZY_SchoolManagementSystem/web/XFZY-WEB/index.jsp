@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    if(session.getAttribute("loginSuccessUser") == null)
+    if(session.getAttribute("currentUser") == null)
     {
         response.sendRedirect("login.jsp");
         return;
@@ -58,7 +58,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-header text-center">
-                    <strong>Hi, ${loginSuccessUser} !</strong>
+                    <strong>Hi, ${currentUser} !</strong>
                 </div>
                 <a id="personalInfoButton" class="dropdown-item" href="user_personal_info.jsp">
                     <i class="fa fa-user"></i> 个人信息

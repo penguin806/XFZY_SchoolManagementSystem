@@ -10,6 +10,9 @@ public class User {
 
     private UserInfo user_Info;
 
+    public User() {
+    }
+
     public User(String userName, String userPassword) {
         this.userName = userName;
         this.userPassword = userPassword;

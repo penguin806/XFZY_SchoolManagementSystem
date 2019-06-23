@@ -22,5 +22,6 @@
     <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 9.0.17" level="application_server_libraries" />
     <orderEntry type="library" exported="" name="mysql:mysql-connector-java:8.0.16" level="project" />
     <orderEntry type="library" exported="" name="com.google.code.gson:gson:2.8.5" level="project" />
+    <orderEntry type="library" name="@types/jquery" level="application" />
   </component>
 </module>

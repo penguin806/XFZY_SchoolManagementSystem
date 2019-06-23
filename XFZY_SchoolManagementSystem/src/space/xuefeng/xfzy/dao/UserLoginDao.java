@@ -9,8 +9,8 @@ import java.sql.ResultSet;
 public class UserLoginDao {
 
     public boolean isUserLoginVerificationSuccess(Connection databaseConnection, User loginUser) throws Exception {
-        String sqlStatement = "SELECT * FROM user WHERE username=? AND password=?";
-        PreparedStatement preparedStatement = databaseConnection.prepareStatement(sqlStatement);
+        String selectStatement = "SELECT * FROM user WHERE username=? AND password=?";
+        PreparedStatement preparedStatement = databaseConnection.prepareStatement(selectStatement);
         preparedStatement.setString(1, loginUser.getUserName());
         preparedStatement.setString(2, loginUser.getUserPassword());
 

@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    if(session.getAttribute("loginSuccessUser") == null)
+    if(session.getAttribute("currentUser") == null)
     {
         response.sendRedirect("login.jsp");
         return;
@@ -29,6 +29,7 @@
     <link href="vendors/pace-progress/css/pace.min.css" rel="stylesheet">
     <!-- My custom styles-->
     <link href="css/snow_custom.css" rel="stylesheet">
+    <link href="css/bootstrap-table.min.css" rel="stylesheet">
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
@@ -58,7 +59,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-header text-center">
-                    <strong>Hi, ${loginSuccessUser} !</strong>
+                    <strong>Hi, ${currentUser} !</strong>
                 </div>
                 <a id="personalInfoButton" class="dropdown-item" href="user_personal_info.jsp">
                     <i class="fa fa-user"></i> 个人信息
@@ -124,58 +125,37 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <i class="fa fa-align-justify"></i> Combined All Table</div>
+                                <i class="fa fa-align-justify"></i> 教职工列表</div>
                             <div class="card-body">
-                                <table class="table table-responsive-sm table-bordered table-striped">
+                                <table id="userTable"
+                                       data-show-fullscreen="true"
+                                       data-side-pagination="client"
+                                       data-sortable="true"
+                                       data-search="true"
+                                       data-pagination="true"
+                                       data-page-list="[10, 25, 50, 100, 200, All]"
+                                       class="table table-responsive-sm table-bordered table-striped">
                                     <thead>
                                     <tr>
-                                        <th>Username</th>
-                                        <th>Date registered</th>
-                                        <th>Role</th>
-                                        <th>Status</th>
+                                        <th data-sortable="true" data-field="userId">ID</th>
+                                        <th data-sortable="true" data-field="userName">用户名</th>
+<%--                                        <th data-field="userPassword">密码</th>--%>
+                                        <th data-field="userEmail">E-mail</th>
+                                        <th data-field="userRole">角色</th>
+                                        <th data-field="userRemarks">备注</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>Vishnu Serghei</td>
-                                        <td>2012/01/01</td>
-                                        <td>Member</td>
-                                        <td>
-                                            <span class="badge badge-success">Active</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Zbyněk Phoibos</td>
-                                        <td>2012/02/01</td>
-                                        <td>Staff</td>
-                                        <td>
-                                            <span class="badge badge-danger">Banned</span>
-                                        </td>
-                                    </tr>
+<%--                                    <tr>--%>
+<%--                                        <td>Vishnu Serghei</td>--%>
+<%--                                        <td>2012/01/01</td>--%>
+<%--                                        <td>Member</td>--%>
+<%--                                        <td>--%>
+<%--                                            <span class="badge badge-success">Active</span>--%>
+<%--                                        </td>--%>
+<%--                                    </tr>--%>
                                     </tbody>
                                 </table>
-                                <nav>
-                                    <ul class="pagination">
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">Prev</a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a class="page-link" href="#">1</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">3</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">4</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">Next</a>
-                                        </li>
-                                    </ul>
-                                </nav>
                             </div>
                         </div>
                     </div>
@@ -202,7 +182,10 @@
     <!--</div>-->
 </footer>
 <!-- CoreUI and necessary plugins-->
-<script src="vendors/jquery/js/jquery.min.js"></script>
+<%--<script src="vendors/jquery/js/jquery.min.js"></script>--%>
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-table.min.js"></script>
 <script src="vendors/popper.js/js/popper.min.js"></script>
 <script src="vendors/bootstrap/js/bootstrap.min.js"></script>
 <script src="vendors/pace-progress/js/pace.min.js"></script>
@@ -216,7 +199,14 @@
 <script>
     $(document).ready(
         function () {
-
+            $.post('queryUser', function (data, status) {
+                    console.log(data);
+                    // Todo: append two button
+                    $('#userTable').bootstrapTable({
+                        data: data
+                    });
+                }
+            );
         }
     );
 </script>

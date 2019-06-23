@@ -31,7 +31,7 @@
                         <h1>Login</h1>
                         <p class="text-muted">欢迎使用XFZY教务管理系统</p>
 
-                        <form class="form-horizontal" action="loginServlet" method="post">
+                        <form class="form-horizontal" action="login" method="post">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                     <span class="input-group-text">
