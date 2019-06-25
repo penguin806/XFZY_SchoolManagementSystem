@@ -128,7 +128,6 @@
                                 <i class="fa fa-align-justify"></i> 教职工列表</div>
                             <div class="card-body">
                                 <table id="userTable"
-                                       data-show-fullscreen="true"
                                        data-side-pagination="client"
                                        data-sortable="true"
                                        data-search="true"
@@ -140,6 +139,7 @@
                                         <th data-sortable="true" data-field="userId">ID</th>
                                         <th data-sortable="true" data-field="userName">用户名</th>
 <%--                                        <th data-field="userPassword">密码</th>--%>
+                                        <th data-sortable="true" data-field="userRealname">姓名</th>
                                         <th data-field="userEmail">E-mail</th>
                                         <th data-field="userRole">角色</th>
                                         <th data-field="userRemarks">备注</th>

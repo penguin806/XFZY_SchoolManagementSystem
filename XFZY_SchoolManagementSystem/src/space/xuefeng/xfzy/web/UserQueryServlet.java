@@ -19,8 +19,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@WebServlet(name="QueryUserServlet", urlPatterns ={ "/queryUser" })
-public class QueryUserServlet extends HttpServlet {
+@WebServlet(name="UserQueryServlet", urlPatterns ={ "/queryUser" })
+public class UserQueryServlet extends HttpServlet {
     DatabaseUtil dbUtil = new DatabaseUtil();
     UserInfoDao userInfoDao = new UserInfoDao();
     Gson gson = new Gson();
@@ -51,6 +51,7 @@ public class QueryUserServlet extends HttpServlet {
                 singleUser.setUserId(usersQueryResult.getString("id"));
                 singleUser.setUserName(usersQueryResult.getString("username"));
                 singleUser.setUserPassword(usersQueryResult.getString("password"));
+                singleUser.setUserRealname(usersQueryResult.getString("realname"));
                 singleUser.setUserEmail(usersQueryResult.getString("email"));
                 singleUser.setUserRole(usersQueryResult.getString("role"));
                 singleUser.setUserRemarks(usersQueryResult.getString("remarks"));

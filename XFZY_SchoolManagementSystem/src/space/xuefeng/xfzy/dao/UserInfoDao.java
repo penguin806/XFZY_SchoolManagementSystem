@@ -10,7 +10,7 @@ public class UserInfoDao {
 
     public ResultSet listAllUsers(Connection databaseConnection) throws Exception
     {
-        String selectStatement = "SELECT `id`, `username`, `password`, `email`, `role`, `remarks` FROM `user`";
+        String selectStatement = "SELECT `id`, `username`, `password`, `realname`, `email`, `role`, `remarks` FROM `user`";
         PreparedStatement selectPrepared = databaseConnection.prepareStatement(selectStatement);
         return selectPrepared.executeQuery();
     }
@@ -18,7 +18,7 @@ public class UserInfoDao {
 
     public ResultSet queryExistingUserByUserName(Connection databaseConnection, String username) throws Exception
     {
-        String selectStatement = "SELECT `id`, `username`, `password`, `email`, `role`, `remarks` FROM `user` WHERE `username` LIKE ?";
+        String selectStatement = "SELECT `id`, `username`, `password`, `realname`, `email`, `role`, `remarks` FROM `user` WHERE `username` LIKE ?";
         PreparedStatement selectPrepared = databaseConnection.prepareStatement(selectStatement);
         String usernamePattern = "%" + username + '%';
         selectPrepared.setString(1, usernamePattern);
@@ -28,13 +28,14 @@ public class UserInfoDao {
 
     public boolean addNewUser(Connection databaseConnection, User userToAdd) throws Exception
     {
-        String insertStatement = "INSERT INTO `user` (`username`, `password`, `email`, `role`, `remarks`) VALUES (?, ?, ?, ?, ?)";
+        String insertStatement = "INSERT INTO `user` (`username`, `password`, `realname`, `email`, `role`, `remarks`) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement insertPrepared = databaseConnection.prepareStatement(insertStatement);
         insertPrepared.setString(1, userToAdd.getUserName());
         insertPrepared.setString(2, userToAdd.getUserPassword());
-        insertPrepared.setString(3, userToAdd.getUserEmail());
-        insertPrepared.setString(4, userToAdd.getUserRole());
-        insertPrepared.setString(5, userToAdd.getUserRemarks());
+        insertPrepared.setString(3, userToAdd.getUserRealname());
+        insertPrepared.setString(4, userToAdd.getUserEmail());
+        insertPrepared.setString(5, userToAdd.getUserRole());
+        insertPrepared.setString(6, userToAdd.getUserRemarks());
         insertPrepared.executeUpdate();
 
         if(null != userToAdd.getUser_Info())
@@ -74,14 +75,15 @@ public class UserInfoDao {
 
     public boolean updateExistingUser(Connection databaseConnection, User userToUpdateInfo) throws Exception
     {
-        String updateStatement = "UPDATE `user` SET `username`=?,`password`=?,`email`=?,`role`=?,`remarks`=? WHERE id=?";
+        String updateStatement = "UPDATE `user` SET `username`=?,`password`=?,`realname`=?,`email`=?,`role`=?,`remarks`=? WHERE id=?";
         PreparedStatement updatePrepared = databaseConnection.prepareStatement(updateStatement);
         updatePrepared.setString(1, userToUpdateInfo.getUserName());
         updatePrepared.setString(2, userToUpdateInfo.getUserPassword());
-        updatePrepared.setString(3, userToUpdateInfo.getUserEmail());
-        updatePrepared.setString(4, userToUpdateInfo.getUserRole());
-        updatePrepared.setString(5, userToUpdateInfo.getUserRemarks());
-        updatePrepared.setString(6, userToUpdateInfo.getUserId());
+        updatePrepared.setString(3, userToUpdateInfo.getUserRealname());
+        updatePrepared.setString(4, userToUpdateInfo.getUserEmail());
+        updatePrepared.setString(5, userToUpdateInfo.getUserRole());
+        updatePrepared.setString(6, userToUpdateInfo.getUserRemarks());
+        updatePrepared.setString(7, userToUpdateInfo.getUserId());
         updatePrepared.executeUpdate();
 
         if(null != userToUpdateInfo.getUser_Info())
