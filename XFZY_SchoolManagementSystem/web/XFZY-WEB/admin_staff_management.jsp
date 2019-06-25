@@ -180,8 +180,90 @@
                     <!-- /.col-->
                 </div>
 
-
             </div>
+
+            <div class="modal fade" id="modifyUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">成员</h4>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="edit_userName">用户名</label>
+                                        <input class="form-control" id="edit_userName" type="text" placeholder="lxf2019">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="edit_userPassword">密码</label>
+                                        <input class="form-control" id="edit_userPassword" type="password" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="edit_userRealname">姓名</label>
+                                        <input class="form-control" id="edit_userRealname" type="text" placeholder="李雪峰">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="edit_userEmail">E-mail</label>
+                                        <input class="form-control" id="edit_userEmail" type="text" placeholder="a1@xuefeng.space">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="select_userRole">角色</label>
+                                        <select class="form-control" id="select_userRole">
+                                            <option>admin</option>
+                                            <option>teacher</option>
+                                            <option>student</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="edit_userRemarks">备注</label>
+                                        <input class="form-control" id="edit_userRemarks" type="text" placeholder="Nothing">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">关闭</button>
+                            <button id="modifyUserModalSaveButton" class="btn btn-primary" type="button">保存</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content-->
+                </div>
+                <!-- /.modal-dialog-->
+            </div>
+
         </div>
     </main>
 </div>
@@ -220,15 +302,20 @@
         var modifyButton = $('<button/>', {
                 text: '修改',
                 id: 'modify-' + value,
-                class: 'modifyButton btn btn-secondary mr-1'
+                class: 'modifyButton btn btn-secondary mr-1',
             }
         );
+        modifyButton.attr('data-toggle', 'modal');
+        modifyButton.attr('data-target', '#modifyUserModal');
         var deleteButton = $('<button/>', {
                 text: '删除',
                 id: 'delete' + value,
                 class: 'deleteButton btn btn-danger'
             }
         );
+        deleteButton.attr('data-toggle', 'modal');
+        deleteButton.attr('data-target', '#deleteUserModal');
+
         var $tableOperationButtonGroup = $('<div></div>').append(
             modifyButton,
             deleteButton
@@ -269,10 +356,31 @@
                     $('#userTable').bootstrapTable({
                         data: resultJsonArray
                     });
+
+                    $('.modifyButton').on('click', function (){
+                            $('#modifyUserModal').find('.modal-title')
+                                .text('修改成员' + $(this).attr('id').replace('modify-',''));
+                            //Todo: fetch data from backend
+                        }
+                    );
+
+                    $('.deleteButton').on('click', function (){
+                            //Todo: send command to backend
+                        }
+                    );
                 }
             );
 
+            $('#addNewUserButton').on('click', function (){
 
+                }
+            );
+
+            $('#modifyUserModalSaveButton').on('click', function (){
+                    //Todo: upload data to backend
+                    $('#modifyUserModal').modal('toggle');
+                }
+            );
 
 
         }
