@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 
-@WebServlet(name = "loginServlet", urlPatterns = { "/login" })
+@WebServlet(name = "LoginServlet", urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
     DatabaseUtil dbUtil = new DatabaseUtil();
     UserLoginDao userLoginDao = new UserLoginDao();
@@ -46,13 +46,13 @@ public class LoginServlet extends HttpServlet {
             if(!bResult)
             {
                 request.setAttribute("error","Username or password incorrect!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
 
             } else {
                 HttpSession currentHttpSession = request.getSession();
                 currentHttpSession.setAttribute("currentUser", loginUser.getUserName());
                 currentHttpSession.setAttribute("currentRole", loginUser.getUserRole());
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+                request.getRequestDispatcher("/index.jsp").forward(request, response);
             }
 
         } catch (Exception e) {

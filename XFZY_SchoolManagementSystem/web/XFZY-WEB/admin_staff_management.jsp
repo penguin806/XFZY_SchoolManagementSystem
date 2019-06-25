@@ -5,6 +5,8 @@
         response.sendRedirect("login.jsp");
         return;
     }
+
+    String currentRole = session.getAttribute("currentRole").toString();
 %>
 
 <!DOCTYPE html>
@@ -64,7 +66,7 @@
                 <a id="personalInfoButton" class="dropdown-item" href="user_personal_info.jsp">
                     <i class="fa fa-user"></i> 个人信息
                 </a>
-                <a id="logoutButton" class="dropdown-item" href="#">
+                <a id="logoutButton" class="dropdown-item" href="logout">
                     <i class="fa fa-lock"></i> 登出
                 </a>
             </div>
@@ -76,12 +78,17 @@
     <div class="sidebar">
         <nav class="sidebar-nav">
             <ul class="nav">
-                <li class="nav-title">管理员</li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_staff_management.jsp">
-                        <i class="nav-icon fa fa-users"></i> 教职工管理
-                    </a>
-                </li>
+<%--                <c:if test="${sessionScope.currentRole == 'admin'}">--%>
+    <% if(currentRole.equals("admin")) { %>
+                    <li class="nav-title">管理员</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin_staff_management.jsp">
+                            <i class="nav-icon fa fa-users"></i> 教职工管理
+                        </a>
+                    </li>
+    <% } %>
+
+    <% if(currentRole.equals("teacher") || currentRole.equals("admin")) { %>
                 <li class="nav-title">教师端</li>
                 <li class="nav-item">
                     <a class="nav-link" href="teacher_course_management.jsp">
@@ -99,6 +106,9 @@
                     <a class="nav-link" href="teacher_fill_score.jsp">
                         <i class="nav-icon fa fa-tachometer"></i> 成绩录入</a>
                 </li>
+    <% } %>
+
+    <% if(currentRole.equals("student") || currentRole.equals("admin")) { %>
                 <li class="nav-title">学生端</li>
                 <li class="nav-item">
                     <a class="nav-link" href="student_select_course.jsp">
@@ -112,6 +122,8 @@
                     <a class="nav-link" href="student_my_score.jsp">
                         <i class="nav-icon fa fa-tachometer"></i> 我的成绩</a>
                 </li>
+    <% } %>
+
             </ul>
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>
@@ -125,14 +137,19 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <i class="fa fa-align-justify"></i> 教职工列表</div>
+                                <i class="fa fa-align-justify"></i> 教职工列表
+                            </div>
                             <div class="card-body">
+                                <div id="snow-table-toolbar" class="toolbar">
+                                    <button id="addNewUserButton" class="btn btn-primary" type="button">添加新成员</button>
+                                </div>
                                 <table id="userTable"
                                        data-side-pagination="client"
                                        data-sortable="true"
                                        data-search="true"
                                        data-pagination="true"
                                        data-page-list="[10, 25, 50, 100, 200, All]"
+                                       data-toolbar=".toolbar"
                                        class="table table-responsive-sm table-bordered table-striped">
                                     <thead>
                                     <tr>
@@ -143,6 +160,7 @@
                                         <th data-field="userEmail">E-mail</th>
                                         <th data-field="userRole">角色</th>
                                         <th data-field="userRemarks">备注</th>
+                                        <th data-field="userId" data-formatter="tableOperationButtonGroupFormatter">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -197,16 +215,66 @@
 <script src="js/main.js"></script>
 <script src="js/snow_custom.js"></script>
 <script>
+    function tableOperationButtonGroupFormatter(value, row)
+    {
+        var modifyButton = $('<button/>', {
+                text: '修改',
+                id: 'modify-' + value,
+                class: 'modifyButton btn btn-secondary mr-1'
+            }
+        );
+        var deleteButton = $('<button/>', {
+                text: '删除',
+                id: 'delete' + value,
+                class: 'deleteButton btn btn-danger'
+            }
+        );
+        var $tableOperationButtonGroup = $('<div></div>').append(
+            modifyButton,
+            deleteButton
+        );
+        console.log($tableOperationButtonGroup);
+        return $tableOperationButtonGroup.html();
+    }
+
     $(document).ready(
         function () {
-            $.post('queryUser', function (data, status) {
-                    console.log(data);
-                    // Todo: append two button
+            $.post('queryUser', function (resultJsonArray, status) {
+
+                    // for(var key in resultJsonArray)
+                    // {
+                    //     var item = resultJsonArray[key];
+                    //     var modifyButton = $('<button/>', {
+                    //             text: '修改',
+                    //             id: item.userId,
+                    //             class: 'modifyButton'
+                    //         }
+                    //     );
+                    //     var deleteButton = $('<button/>', {
+                    //             text: '删除',
+                    //             id: item.userId,
+                    //             class: 'deleteButton'
+                    //         }
+                    //     );
+                    //     var tableOperationButtonGroup = $('<div></div>').append(
+                    //         modifyButton,
+                    //         deleteButton
+                    //     );
+                    //     console.log(tableOperationButtonGroup);
+                    //
+                    //     item.testtest = tableOperationButtonGroup;
+                    // }
+                    console.log(resultJsonArray);
+
                     $('#userTable').bootstrapTable({
-                        data: data
+                        data: resultJsonArray
                     });
                 }
             );
+
+
+
+
         }
     );
 </script>

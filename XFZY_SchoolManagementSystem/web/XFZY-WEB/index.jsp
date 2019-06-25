@@ -5,6 +5,8 @@
         response.sendRedirect("login.jsp");
         return;
     }
+
+    String currentRole = session.getAttribute("currentRole").toString();
 %>
 
 <!DOCTYPE html>
@@ -63,7 +65,7 @@
                 <a id="personalInfoButton" class="dropdown-item" href="user_personal_info.jsp">
                     <i class="fa fa-user"></i> 个人信息
                 </a>
-                <a id="logoutButton" class="dropdown-item" href="#">
+                <a id="logoutButton" class="dropdown-item" href="logout">
                     <i class="fa fa-lock"></i> 登出
                 </a>
             </div>
@@ -75,12 +77,17 @@
     <div class="sidebar">
         <nav class="sidebar-nav">
             <ul class="nav">
+                <%--                <c:if test="${sessionScope.currentRole == 'admin'}">--%>
+                <% if(currentRole.equals("admin")) { %>
                 <li class="nav-title">管理员</li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_staff_management.jsp">
                         <i class="nav-icon fa fa-users"></i> 教职工管理
                     </a>
                 </li>
+                <% } %>
+
+                <% if(currentRole.equals("teacher") || currentRole.equals("admin")) { %>
                 <li class="nav-title">教师端</li>
                 <li class="nav-item">
                     <a class="nav-link" href="teacher_course_management.jsp">
@@ -98,6 +105,9 @@
                     <a class="nav-link" href="teacher_fill_score.jsp">
                         <i class="nav-icon fa fa-tachometer"></i> 成绩录入</a>
                 </li>
+                <% } %>
+
+                <% if(currentRole.equals("student") || currentRole.equals("admin")) { %>
                 <li class="nav-title">学生端</li>
                 <li class="nav-item">
                     <a class="nav-link" href="student_select_course.jsp">
@@ -111,6 +121,8 @@
                     <a class="nav-link" href="student_my_score.jsp">
                         <i class="nav-icon fa fa-tachometer"></i> 我的成绩</a>
                 </li>
+                <% } %>
+
             </ul>
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>
