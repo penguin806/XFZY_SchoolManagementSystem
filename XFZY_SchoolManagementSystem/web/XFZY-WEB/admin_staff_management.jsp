@@ -311,7 +311,7 @@
                             <!-- /.row-->
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <div id="someFieldEmptyError" class="alert alert-danger" role="alert">用户名、密码、真实姓名、邮箱为必填项</div>
+                                    <div class="someFieldEmptyError" class="alert alert-danger" role="alert">用户名、密码、真实姓名、邮箱为必填项</div>
                                 </div>
                             </div>
                             <!-- /.row-->
@@ -452,6 +452,12 @@
                                 </div>
                             </div>
                             <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="someFieldEmptyError" class="alert alert-danger" role="alert">用户名、密码、真实姓名、邮箱为必填项</div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
 
                         </div>
                         <div class="modal-footer">
@@ -505,11 +511,11 @@
                 class: 'modifyButton btn btn-secondary mr-1',
             }
         );
-        modifyButton.attr('data-toggle', 'modal');
-        modifyButton.attr('data-target', '#modifyUserModal');
+        // modifyButton.attr('data-toggle', 'modal');
+        // modifyButton.attr('data-target', '#modifyUserModal');
         var deleteButton = $('<button/>', {
                 text: '删除',
-                id: 'delete' + value,
+                id: 'delete-' + value,
                 class: 'deleteButton btn btn-danger'
             }
         );
@@ -520,58 +526,95 @@
             modifyButton,
             deleteButton
         );
-        console.log($tableOperationButtonGroup);
         return $tableOperationButtonGroup.html();
     }
 
     $(document).ready(
         function () {
-            $.post('queryUser', function (resultJsonArray, status) {
-                    console.log(resultJsonArray);
 
-                    $('#userTable').bootstrapTable({
-                        data: resultJsonArray
-                    });
+            function loadUserTableFromBackend()
+            {
+                // Send post request to backend <queryUser> servlet, download results in json format.
+                /*Callback for post start*/
+                $.post('queryUser', function (resultJsonArray, status) {
+                        console.log(status, resultJsonArray);
 
-                    $('.modifyButton').on('click', function (){
-                            var userId = $(this).attr('id').replace('modify-','');
-                            $('#modifyUserModal').find('.modal-title')
-                                .text('修改成员' + userId);
-                            //Done: fetch data from backend
-                            $.post('queryUser',
-                                {
-                                    userId: userId
-                                },
-                                function(userDetailResult, status){
-                                    console.log(userDetailResult);
-                                    $('#modifyUserModal #edit_userName').val(userDetailResult.userName);
-                                    $('#modifyUserModal #edit_userPassword').val(userDetailResult.userPassword);
-                                    $('#modifyUserModal #edit_userRealname').val(userDetailResult.userRealname);
-                                    $('#modifyUserModal #edit_userEmail').val(userDetailResult.userEmail);
-                                    $('#modifyUserModal #select_userRole').val(userDetailResult.userRole);
-                                    $('#modifyUserModal #edit_userRemarks').val(userDetailResult.userRemarks);
+                        $('#userTable').bootstrapTable({
+                            data: resultJsonArray,
+                            onAll: function (name, args) {
+                                console.log(name, args);
+                            },
+                            onPostBody: function (data) {
+                                $('body').on('click', '.modifyButton', function (){
+                                        var userId = $(this).attr('id').replace('modify-','');
+                                        if(isNaN(userId))
+                                        {
+                                            alert('Invalid user id');
+                                            return;
+                                        }
+                                        $('#modifyUserModal').find('.modal-title')
+                                            .text('修改成员' + userId);
 
-                                    $('#modifyUserModal #select_user_Info_userinfo_Sex').val(userDetailResult.user_Info.userinfo_Sex);
-                                    $('#modifyUserModal #edit_user_Info_userinfo_Idcard_number').val(userDetailResult.user_Info.userinfo_Idcard_number);
-                                    $('#modifyUserModal #edit_user_Info_userinfo_Department').val(userDetailResult.user_Info.userinfo_Department);
-                                    $('#modifyUserModal #edit_user_Info_userinfo_Class').val(userDetailResult.user_Info.userinfo_Class);
-                                    $('#modifyUserModal #edit_user_Info_userinfo_Home_address').val(userDetailResult.user_Info.userinfo_Home_address);
-                                    $('#modifyUserModal #edit_user_Info_userinfo_Train_station').val(userDetailResult.user_Info.userinfo_Train_station);
-                                }
-                            );
+                                        console.log('POST: queryUser + ' + userId);
+                                        $.post('queryUser',
+                                            {
+                                                userId: userId
+                                            },
+                                            function(userDetailResult, status){
+                                                console.log('POST: queryUser + ' + userId, status);
+                                                console.log(userDetailResult);
+                                                $('#modifyUserModal #edit_userName').val(userDetailResult.userName);
+                                                $('#modifyUserModal #edit_userPassword').val(userDetailResult.userPassword);
+                                                $('#modifyUserModal #edit_userRealname').val(userDetailResult.userRealname);
+                                                $('#modifyUserModal #edit_userEmail').val(userDetailResult.userEmail);
+                                                $('#modifyUserModal #select_userRole').val(userDetailResult.userRole);
+                                                $('#modifyUserModal #edit_userRemarks').val(userDetailResult.userRemarks);
 
-                        }
-                    );
+                                                $('#modifyUserModal #select_user_Info_userinfo_Sex').val(userDetailResult.user_Info.userinfo_Sex);
+                                                $('#modifyUserModal #edit_user_Info_userinfo_Idcard_number').val(userDetailResult.user_Info.userinfo_Idcard_number);
+                                                $('#modifyUserModal #edit_user_Info_userinfo_Department').val(userDetailResult.user_Info.userinfo_Department);
+                                                $('#modifyUserModal #edit_user_Info_userinfo_Class').val(userDetailResult.user_Info.userinfo_Class);
+                                                $('#modifyUserModal #edit_user_Info_userinfo_Home_address').val(userDetailResult.user_Info.userinfo_Home_address);
+                                                $('#modifyUserModal #edit_user_Info_userinfo_Train_station').val(userDetailResult.user_Info.userinfo_Train_station);
+                                                $('#modifyUserModal').modal('show');
+                                            },
+                                            'json'
+                                        );
 
-                    $('.deleteButton').on('click', function (){
-                            //Todo: send command to backend
-                        }
-                    );
+                                    }
+                                );
 
-                }
-            );
+                                $('body').on('click', '.deleteButton', function (){
+                                        var userId = $(this).attr('id').replace('delete-','');
+                                        if(isNaN(userId))
+                                        {
+                                            alert('Invalid user id');
+                                            return;
+                                        }
+                                        console.log('POST: deleteUser + ' + userId);
 
-            $('#addNewUserModal #someFieldEmptyError').hide();
+                                        $.post('deleteUser', {
+                                                userToDelete: userId
+                                            },
+                                            function (data, status){
+                                                console.log(status, data);
+                                                loadUserTableFromBackend();
+                                            }
+                                        );
+                                    }
+
+                                );
+                            }
+                        });
+                    },
+                    'json'
+                );
+                /*Callback for post end*/
+            }
+
+            loadUserTableFromBackend();
+
+            $('#addNewUserModal,#modifyUserModal .someFieldEmptyError').hide();
 
             $('#addNewUserButton').on('click', function (){
                     $('#addNewUserButton').find('.modal-title')
@@ -580,8 +623,52 @@
             );
 
             $('#modifyUserModalSaveButton').on('click', function (){
-                    //Todo: upload data to backend
-                    $('#modifyUserModal').modal('toggle');
+                    var userToUpdateObject = {};
+
+                    var userId = $('#modifyUserModal').find('.modal-title')
+                        .text().replace('修改成员','');
+                    console.log(userId);
+                    if(isNaN(userId))
+                    {
+                        alert('Invalid user id');
+                        return;
+                    }
+                    userToUpdateObject.userId = userId;
+                    userToUpdateObject.userName = $('#modifyUserModal #edit_userName').val();
+                    userToUpdateObject.userPassword = $('#modifyUserModal #edit_userPassword').val();
+                    userToUpdateObject.userRealname = $('#modifyUserModal #edit_userRealname').val();
+                    userToUpdateObject.userEmail = $('#modifyUserModal #edit_userEmail').val();
+                    userToUpdateObject.userRole = $('#modifyUserModal #select_userRole').val();
+                    userToUpdateObject.userRemarks = $('#modifyUserModal #edit_userRemarks').val();
+                    userToUpdateObject.user_Info = { };
+
+                    userToUpdateObject.user_Info.userinfo_Sex = $('#modifyUserModal #select_user_Info_userinfo_Sex').val();
+                    userToUpdateObject.user_Info.userinfo_Idcard_number = $('#modifyUserModal #edit_user_Info_userinfo_Idcard_number').val();
+                    userToUpdateObject.user_Info.userinfo_Department = $('#modifyUserModal #edit_user_Info_userinfo_Department').val();
+                    userToUpdateObject.user_Info.userinfo_Class = $('#modifyUserModal #edit_user_Info_userinfo_Class').val();
+                    userToUpdateObject.user_Info.userinfo_Home_address = $('#modifyUserModal #edit_user_Info_userinfo_Home_address').val();
+                    userToUpdateObject.user_Info.userinfo_Train_station = $('#modifyUserModal #edit_user_Info_userinfo_Train_station').val();
+
+                    if(userToUpdateObject.userName.length === 0 || userToUpdateObject.userPassword.length === 0
+                        || userToUpdateObject.userRealname.length === 0 || userToUpdateObject.userEmail.length === 0)
+                    {
+                        console.log($('#modifyUserModal .someFieldEmptyError'));
+                        $('#modifyUserModal .someFieldEmptyError').fadeIn();
+                        return;
+                    }
+
+                    $.post('updateUser',
+                        {
+                            userToUpdate: JSON.stringify(userToUpdateObject)
+                        },
+                        function (data, status) {
+                            console.info('#modifyUserModalSaveButton .click:' + data);
+                            $('#modifyUserModal').modal('toggle');
+
+                            loadUserTableFromBackend();
+                        }
+                    );
+
                 }
             );
 
@@ -606,8 +693,7 @@
                     if(userToAddObject.userName.length === 0 || userToAddObject.userPassword.length === 0
                         || userToAddObject.userRealname.length === 0 || userToAddObject.userEmail.length === 0)
                     {
-                        console.log($('#addNewUserModal #someFieldEmptyError'));
-                        $('#addNewUserModal #someFieldEmptyError').fadeIn();
+                        $('#addNewUserModal .someFieldEmptyError').fadeIn();
                         return;
                     }
 
@@ -618,6 +704,8 @@
                         function (data, status) {
                             console.info('#addNewUserModalSaveButton .click:' + data);
                             $('#addNewUserModal').modal('toggle');
+
+                            loadUserTableFromBackend();
                         }
                     );
                 }

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Connection;
 
 @WebServlet(name="UserDeleteServlet", urlPatterns ={ "/deleteUser" })
 public class UserDeleteServlet extends HttpServlet {
@@ -29,6 +30,31 @@ public class UserDeleteServlet extends HttpServlet {
             throw new ServletException("Access Denied!");
         }
 
+        String receivedClientData = request.getParameter("userToDelete");
+        if(receivedClientData == null || receivedClientData.isEmpty())
+        {
+            throw new ServletException("Parameter userToDelete is null");
+        }
+
+        Connection dbConnection = null;
+        try {
+            String idOfUserToDelete = receivedClientData;
+            dbConnection = dbUtil.getDatabaseConnection();
+            boolean bSuccess = userInfoDao.deleteExistingUser(dbConnection, idOfUserToDelete);
+            response.getWriter().write("success");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(null != dbConnection)
+            {
+                try {
+                    dbUtil.closeDatabaseConnection(dbConnection);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
 
     }
 }
