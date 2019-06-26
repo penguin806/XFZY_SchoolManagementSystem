@@ -12,3 +12,7 @@
 /*        height: calc(100vh) !important;*/
 /*    }*/
 /*}*/
+
+body {
+    font-family: STHeiti, "Microsoft YaHei", SimSun;
+}
