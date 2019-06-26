@@ -165,14 +165,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-<%--                                    <tr>--%>
-<%--                                        <td>Vishnu Serghei</td>--%>
-<%--                                        <td>2012/01/01</td>--%>
-<%--                                        <td>Member</td>--%>
-<%--                                        <td>--%>
-<%--                                            <span class="badge badge-success">Active</span>--%>
-<%--                                        </td>--%>
-<%--                                    </tr>--%>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -540,8 +533,6 @@
                 class: 'deleteButton btn btn-danger'
             }
         );
-        deleteButton.attr('data-toggle', 'modal');
-        deleteButton.attr('data-target', '#deleteUserModal');
 
         var $tableOperationButtonGroup = $('<div></div>').append(
             modifyButton,
@@ -654,7 +645,6 @@
                     if(userToUpdateObject.userName.length === 0 || userToUpdateObject.userPassword.length === 0
                         || userToUpdateObject.userRealname.length === 0 || userToUpdateObject.userEmail.length === 0)
                     {
-                        console.log($('#modifyUserModal .someFieldEmptyError'));
                         $('#modifyUserModal .someFieldEmptyError').fadeIn();
                         return;
                     }
