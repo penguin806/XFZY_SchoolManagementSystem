@@ -309,6 +309,12 @@
                                 </div>
                             </div>
                             <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div id="someFieldEmptyError" class="alert alert-danger" role="alert">用户名、密码、真实姓名、邮箱为必填项</div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
 
                         </div>
                         <div class="modal-footer">
@@ -531,26 +537,26 @@
                             var userId = $(this).attr('id').replace('modify-','');
                             $('#modifyUserModal').find('.modal-title')
                                 .text('修改成员' + userId);
-                            //Todo: fetch data from backend
+                            //Done: fetch data from backend
                             $.post('queryUser',
                                 {
                                     userId: userId
                                 },
                                 function(userDetailResult, status){
                                     console.log(userDetailResult);
-                                    $('#modifyUserModal #edit_userName').val(userDetailResult[0].userName);
-                                    $('#modifyUserModal #edit_userPassword').val(userDetailResult[0].userPassword);
-                                    $('#modifyUserModal #edit_userRealname').val(userDetailResult[0].userRealname);
-                                    $('#modifyUserModal #edit_userEmail').val(userDetailResult[0].userEmail);
-                                    $('#modifyUserModal #select_userRole').val(userDetailResult[0].userRole);
-                                    $('#modifyUserModal #edit_userRemarks').val(userDetailResult[0].userRemarks);
+                                    $('#modifyUserModal #edit_userName').val(userDetailResult.userName);
+                                    $('#modifyUserModal #edit_userPassword').val(userDetailResult.userPassword);
+                                    $('#modifyUserModal #edit_userRealname').val(userDetailResult.userRealname);
+                                    $('#modifyUserModal #edit_userEmail').val(userDetailResult.userEmail);
+                                    $('#modifyUserModal #select_userRole').val(userDetailResult.userRole);
+                                    $('#modifyUserModal #edit_userRemarks').val(userDetailResult.userRemarks);
 
-                                    $('#modifyUserModal #select_user_Info_userinfo_Sex').val(userDetailResult[0].user_Info.userinfo_Sex);
-                                    $('#modifyUserModal #edit_user_Info_userinfo_Idcard_number').val(userDetailResult[0].user_Info.userinfo_Idcard_number);
-                                    $('#modifyUserModal #edit_user_Info_userinfo_Department').val(userDetailResult[0].user_Info.userinfo_Department);
-                                    $('#modifyUserModal #edit_user_Info_userinfo_Class').val(userDetailResult[0].user_Info.userinfo_Class);
-                                    $('#modifyUserModal #edit_user_Info_userinfo_Home_address').val(userDetailResult[0].user_Info.userinfo_Home_address);
-                                    $('#modifyUserModal #edit_user_Info_userinfo_Train_station').val(userDetailResult[0].user_Info.userinfo_Train_station);
+                                    $('#modifyUserModal #select_user_Info_userinfo_Sex').val(userDetailResult.user_Info.userinfo_Sex);
+                                    $('#modifyUserModal #edit_user_Info_userinfo_Idcard_number').val(userDetailResult.user_Info.userinfo_Idcard_number);
+                                    $('#modifyUserModal #edit_user_Info_userinfo_Department').val(userDetailResult.user_Info.userinfo_Department);
+                                    $('#modifyUserModal #edit_user_Info_userinfo_Class').val(userDetailResult.user_Info.userinfo_Class);
+                                    $('#modifyUserModal #edit_user_Info_userinfo_Home_address').val(userDetailResult.user_Info.userinfo_Home_address);
+                                    $('#modifyUserModal #edit_user_Info_userinfo_Train_station').val(userDetailResult.user_Info.userinfo_Train_station);
                                 }
                             );
 
@@ -561,11 +567,15 @@
                             //Todo: send command to backend
                         }
                     );
+
                 }
             );
 
+            $('#addNewUserModal #someFieldEmptyError').hide();
+
             $('#addNewUserButton').on('click', function (){
-                    // Nothing to do
+                    $('#addNewUserButton').find('.modal-title')
+                        .text('添加新成员');
                 }
             );
 
@@ -576,8 +586,40 @@
             );
 
             $('#addNewUserModalSaveButton').on('click', function (){
-                    //Todo: upload data to backend
-                    $('#addNewUserModal').modal('toggle');
+                    var userToAddObject = {};
+
+                    userToAddObject.userName = $('#addNewUserModal #addnew_userName').val();
+                    userToAddObject.userPassword = $('#addNewUserModal #addnew_userPassword').val();
+                    userToAddObject.userRealname = $('#addNewUserModal #addnew_userRealname').val();
+                    userToAddObject.userEmail = $('#addNewUserModal #addnew_userEmail').val();
+                    userToAddObject.userRole = $('#addNewUserModal #addnew_select_userRole').val();
+                    userToAddObject.userRemarks = $('#addNewUserModal #addnew_userRemarks').val();
+                    userToAddObject.user_Info = { };
+
+                    userToAddObject.user_Info.userinfo_Sex = $('#addNewUserModal #addnew_select_user_Info_userinfo_Sex').val();
+                    userToAddObject.user_Info.userinfo_Idcard_number = $('#addNewUserModal #addnew_user_Info_userinfo_Idcard_number').val();
+                    userToAddObject.user_Info.userinfo_Department = $('#addNewUserModal #addnew_user_Info_userinfo_Department').val();
+                    userToAddObject.user_Info.userinfo_Class = $('#addNewUserModal #addnew_user_Info_userinfo_Class').val();
+                    userToAddObject.user_Info.userinfo_Home_address = $('#addNewUserModal #addnew_user_Info_userinfo_Home_address').val();
+                    userToAddObject.user_Info.userinfo_Train_station = $('#addNewUserModal #addnew_user_Info_userinfo_Train_station').val();
+
+                    if(userToAddObject.userName.length === 0 || userToAddObject.userPassword.length === 0
+                        || userToAddObject.userRealname.length === 0 || userToAddObject.userEmail.length === 0)
+                    {
+                        console.log($('#addNewUserModal #someFieldEmptyError'));
+                        $('#addNewUserModal #someFieldEmptyError').fadeIn();
+                        return;
+                    }
+
+                    $.post('addUser',
+                        {
+                            userToAdd: JSON.stringify(userToAddObject)
+                        },
+                        function (data, status) {
+                            console.info('#addNewUserModalSaveButton .click:' + data);
+                            $('#addNewUserModal').modal('toggle');
+                        }
+                    );
                 }
             );
         }

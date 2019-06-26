@@ -29,14 +29,13 @@ public class UserQueryServlet extends HttpServlet {
 
     private void querySingleExistingUser(HttpServletResponse response, String userId) {
         Connection dbConnection = null;
-        Collection<User> usersList = new ArrayList<User>();
+        User singleUser = new User();
 
         try {
             dbConnection = dbUtil.getDatabaseConnection();
             ResultSet usersQueryResult = userInfoDao.queryExistingUserByUserId(dbConnection, userId);
             if (usersQueryResult.next())
             {
-                User singleUser = new User();
                 UserInfo singleUserInfo = new UserInfo();
                 singleUser.setUserId(usersQueryResult.getString("id"));
                 singleUser.setUserName(usersQueryResult.getString("username"));
@@ -53,13 +52,12 @@ public class UserQueryServlet extends HttpServlet {
                 singleUserInfo.setUserinfo_Home_address(usersQueryResult.getString("home_address"));
                 singleUserInfo.setUserinfo_Train_station(usersQueryResult.getString("train_station"));
                 singleUser.setUser_Info(singleUserInfo);
-                usersList.add(singleUser);
             }
             else {
                 throw new ServletException("User Not Found");
             }
 
-            String resultJson = gson.toJson(usersList);
+            String resultJson = gson.toJson(singleUser);
             ResponseUtil.writeResponseData(response, resultJson);
 
         } catch (Exception e) {

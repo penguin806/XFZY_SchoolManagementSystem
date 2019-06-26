@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class DatabaseUtil {
-    private final String dbUrl = "jdbc:mysql://localhost:3306/xfzy_school_mng_sys";
+    private final String dbUrl = "jdbc:mysql://localhost:3306/xfzy_school_mng_sys?characterEncoding=utf8";
     private final String dbUsername = "xfzy";
     private final String dbPassword = "20190621";
     private final String jdbcName = "com.mysql.jdbc.Driver";

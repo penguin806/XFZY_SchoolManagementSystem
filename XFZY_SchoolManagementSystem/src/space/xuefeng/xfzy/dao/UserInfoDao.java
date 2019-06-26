@@ -56,17 +56,12 @@ public class UserInfoDao {
     }
 
 
-    public boolean deleteExistingUser(Connection databaseConnection, User userToDelete) throws Exception
+    public boolean deleteExistingUser(Connection databaseConnection, String idOfUserToDelete) throws Exception
     {
-        String deleteStatement = "DELETE FROM `user` WHERE `username`=?";
+
+        String deleteStatement = "DELETE FROM `user`,`user_info` USING `user`,`user_info` WHERE `user`.`id`=? AND `user`.`username` = `user_info`.`username`";
         PreparedStatement deletePrepared = databaseConnection.prepareStatement(deleteStatement);
-        deletePrepared.setString(1, userToDelete.getUserName());
-        deletePrepared.executeUpdate();
-
-
-        String insertStatement2 = "DELETE FROM `user_info` WHERE `username`=?";
-        deletePrepared = databaseConnection.prepareStatement(insertStatement2);
-        deletePrepared.setString(1,userToDelete.getUserName());
+        deletePrepared.setString(1, idOfUserToDelete);
         deletePrepared.executeUpdate();
 
         return true;
