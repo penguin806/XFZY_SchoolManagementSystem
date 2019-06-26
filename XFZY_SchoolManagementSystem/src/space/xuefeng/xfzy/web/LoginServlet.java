@@ -50,6 +50,7 @@ public class LoginServlet extends HttpServlet {
 
             } else {
                 HttpSession currentHttpSession = request.getSession();
+                currentHttpSession.setAttribute("currentUserId", loginUser.getUserId());
                 currentHttpSession.setAttribute("currentUser", loginUser.getUserName());
                 currentHttpSession.setAttribute("currentRole", loginUser.getUserRole());
                 request.getRequestDispatcher("/index.jsp").forward(request, response);

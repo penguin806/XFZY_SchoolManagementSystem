@@ -112,7 +112,7 @@
                 <li class="nav-title">学生端</li>
                 <li class="nav-item">
                     <a class="nav-link" href="student_select_course.jsp">
-                        <i class="nav-icon fa fa-book"></i> 选课</a>
+                        <i class="nav-icon fa fa-crosshairs"></i> 选课</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="student_my_courses.jsp">
