@@ -8,6 +8,9 @@ public class UserInfo {
     private String userinfo_Home_address;
     private String userinfo_Train_station;
 
+    public UserInfo() {
+    }
+
     public UserInfo(String userinfo_Sex, String userinfo_Idcard_number, String userinfo_Department, String userinfo_Class, String userinfo_Home_address, String userinfo_Train_station) {
         this.userinfo_Sex = userinfo_Sex;
         this.userinfo_Idcard_number = userinfo_Idcard_number;
@@ -16,6 +19,7 @@ public class UserInfo {
         this.userinfo_Home_address = userinfo_Home_address;
         this.userinfo_Train_station = userinfo_Train_station;
     }
+
 
     public String getUserinfo_Sex() {
         return userinfo_Sex;

@@ -1,9 +1,11 @@
 package space.xuefeng.xfzy.web;
 
 import com.google.gson.Gson;
+import com.sun.deploy.net.HttpResponse;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import space.xuefeng.xfzy.dao.UserInfoDao;
 import space.xuefeng.xfzy.model.User;
+import space.xuefeng.xfzy.model.UserInfo;
 import space.xuefeng.xfzy.util.DatabaseUtil;
 import space.xuefeng.xfzy.util.ResponseUtil;
 
@@ -25,6 +27,57 @@ public class UserQueryServlet extends HttpServlet {
     UserInfoDao userInfoDao = new UserInfoDao();
     Gson gson = new Gson();
 
+    private void querySingleExistingUser(HttpServletResponse response, String userId) {
+        Connection dbConnection = null;
+        Collection<User> usersList = new ArrayList<User>();
+
+        try {
+            dbConnection = dbUtil.getDatabaseConnection();
+            ResultSet usersQueryResult = userInfoDao.queryExistingUserByUserId(dbConnection, userId);
+            if (usersQueryResult.next())
+            {
+                User singleUser = new User();
+                UserInfo singleUserInfo = new UserInfo();
+                singleUser.setUserId(usersQueryResult.getString("id"));
+                singleUser.setUserName(usersQueryResult.getString("username"));
+                singleUser.setUserPassword(usersQueryResult.getString("password"));
+                singleUser.setUserRealname(usersQueryResult.getString("realname"));
+                singleUser.setUserEmail(usersQueryResult.getString("email"));
+                singleUser.setUserRole(usersQueryResult.getString("role"));
+                singleUser.setUserRemarks(usersQueryResult.getString("remarks"));
+
+                singleUserInfo.setUserinfo_Sex(usersQueryResult.getString("sex"));
+                singleUserInfo.setUserinfo_Idcard_number(usersQueryResult.getString("idcard_number"));
+                singleUserInfo.setUserinfo_Department(usersQueryResult.getString("department"));
+                singleUserInfo.setUserinfo_Class(usersQueryResult.getString("class"));
+                singleUserInfo.setUserinfo_Home_address(usersQueryResult.getString("home_address"));
+                singleUserInfo.setUserinfo_Train_station(usersQueryResult.getString("train_station"));
+                singleUser.setUser_Info(singleUserInfo);
+                usersList.add(singleUser);
+            }
+            else {
+                throw new ServletException("User Not Found");
+            }
+
+            String resultJson = gson.toJson(usersList);
+            ResponseUtil.writeResponseData(response, resultJson);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            if(null != dbConnection)
+            {
+                try {
+                    dbUtil.closeDatabaseConnection(dbConnection);
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // super.doGet(req, resp);
@@ -38,6 +91,14 @@ public class UserQueryServlet extends HttpServlet {
         {
             throw new ServletException("Access Denied!");
         }
+
+        String userId = request.getParameter("userId");
+        if(null != userId && !userId.isEmpty())
+        {
+            this.querySingleExistingUser(response, userId);
+            return;
+        }
+
 
         Connection dbConnection = null;
         Collection<User> usersList = new ArrayList<User>();

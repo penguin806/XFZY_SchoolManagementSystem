@@ -141,8 +141,9 @@
                             </div>
                             <div class="card-body">
                                 <div id="snow-table-toolbar" class="toolbar">
-                                    <button id="addNewUserButton" class="btn btn-primary" type="button">添加新成员</button>
+                                    <button id="addNewUserButton" class="btn btn-primary" data-toggle="modal" data-target="#addNewUserModal" type="button">添加新成员</button>
                                 </div>
+
                                 <table id="userTable"
                                        data-side-pagination="client"
                                        data-sortable="true"
@@ -182,8 +183,145 @@
 
             </div>
 
-            <div class="modal fade" id="modifyUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal fade" id="addNewUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">成员</h4>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="addnew_userName">用户名</label>
+                                        <input class="form-control" id="addnew_userName" type="text" placeholder="lxf2019">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="addnew_userPassword">密码</label>
+                                        <input class="form-control" id="addnew_userPassword" type="password" placeholder="123456">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="addnew_userRealname">姓名</label>
+                                        <input class="form-control" id="addnew_userRealname" type="text" placeholder="李雪峰">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="addnew_userEmail">E-mail</label>
+                                        <input class="form-control" id="addnew_userEmail" type="text" placeholder="a1@xuefeng.space">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="addnew_select_userRole">角色</label>
+                                        <select class="form-control" id="addnew_select_userRole">
+                                            <option value="admin">admin</option>
+                                            <option value="teacher">teacher</option>
+                                            <option value="student">student</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="addnew_userRemarks">备注</label>
+                                        <input class="form-control" id="addnew_userRemarks" type="text" placeholder="NULL">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="addnew_select_user_Info_userinfo_Sex">性别</label>
+                                        <select class="form-control" id="addnew_select_user_Info_userinfo_Sex">
+                                            <option value="男">男</option>
+                                            <option value="女">女</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="addnew_user_Info_userinfo_Idcard_number">身份证号</label>
+                                        <input class="form-control" id="addnew_user_Info_userinfo_Idcard_number" type="text" placeholder="431126200000000000">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="addnew_user_Info_userinfo_Department">院系</label>
+                                        <input class="form-control" id="addnew_user_Info_userinfo_Department" type="text" placeholder="信息科学与工程学院">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="addnew_user_Info_userinfo_Class">班级</label>
+                                        <input class="form-control" id="addnew_user_Info_userinfo_Class" type="text" placeholder="计算机科学与技术(师范)">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="addnew_user_Info_userinfo_Home_address">家庭地址</label>
+                                        <input class="form-control" id="addnew_user_Info_userinfo_Home_address" type="text" placeholder="桃子湖">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="addnew_user_Info_userinfo_Train_station">火车站</label>
+                                        <input class="form-control" id="addnew_user_Info_userinfo_Train_station" type="text" placeholder="永州">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">关闭</button>
+                            <button id="addNewUserModalSaveButton" class="btn btn-primary" type="button">保存</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content-->
+                </div>
+                <!-- /.modal-dialog-->
+            </div>
+            <div class="modal fade" id="modifyUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-success" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">成员</h4>
@@ -206,7 +344,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label for="edit_userPassword">密码</label>
-                                        <input class="form-control" id="edit_userPassword" type="password" placeholder="">
+                                        <input class="form-control" id="edit_userPassword" type="password" placeholder="123456">
                                     </div>
                                 </div>
                             </div>
@@ -234,9 +372,9 @@
                                     <div class="form-group">
                                         <label for="select_userRole">角色</label>
                                         <select class="form-control" id="select_userRole">
-                                            <option>admin</option>
-                                            <option>teacher</option>
-                                            <option>student</option>
+                                            <option value="admin">admin</option>
+                                            <option value="teacher">teacher</option>
+                                            <option value="student">student</option>
                                         </select>
                                     </div>
                                 </div>
@@ -246,17 +384,73 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label for="edit_userRemarks">备注</label>
-                                        <input class="form-control" id="edit_userRemarks" type="text" placeholder="Nothing">
+                                        <input class="form-control" id="edit_userRemarks" type="text" placeholder="NULL">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="select_user_Info_userinfo_Sex">性别</label>
+                                        <select class="form-control" id="select_user_Info_userinfo_Sex">
+                                            <option value="男">男</option>
+                                            <option value="女">女</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="edit_user_Info_userinfo_Idcard_number">身份证号</label>
+                                        <input class="form-control" id="edit_user_Info_userinfo_Idcard_number" type="text" placeholder="431126200000000000">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="edit_user_Info_userinfo_Department">院系</label>
+                                        <input class="form-control" id="edit_user_Info_userinfo_Department" type="text" placeholder="信息科学与工程学院">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="edit_user_Info_userinfo_Class">班级</label>
+                                        <input class="form-control" id="edit_user_Info_userinfo_Class" type="text" placeholder="计算机科学与技术(师范)">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="edit_user_Info_userinfo_Home_address">家庭地址</label>
+                                        <input class="form-control" id="edit_user_Info_userinfo_Home_address" type="text" placeholder="桃子湖">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="edit_user_Info_userinfo_Train_station">火车站</label>
+                                        <input class="form-control" id="edit_user_Info_userinfo_Train_station" type="text" placeholder="永州">
                                     </div>
                                 </div>
                             </div>
                             <!-- /.row-->
 
-
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">关闭</button>
-                            <button id="modifyUserModalSaveButton" class="btn btn-primary" type="button">保存</button>
+                            <button id="modifyUserModalSaveButton" class="btn btn-success" type="button">保存</button>
                         </div>
                     </div>
                     <!-- /.modal-content-->
@@ -327,30 +521,6 @@
     $(document).ready(
         function () {
             $.post('queryUser', function (resultJsonArray, status) {
-
-                    // for(var key in resultJsonArray)
-                    // {
-                    //     var item = resultJsonArray[key];
-                    //     var modifyButton = $('<button/>', {
-                    //             text: '修改',
-                    //             id: item.userId,
-                    //             class: 'modifyButton'
-                    //         }
-                    //     );
-                    //     var deleteButton = $('<button/>', {
-                    //             text: '删除',
-                    //             id: item.userId,
-                    //             class: 'deleteButton'
-                    //         }
-                    //     );
-                    //     var tableOperationButtonGroup = $('<div></div>').append(
-                    //         modifyButton,
-                    //         deleteButton
-                    //     );
-                    //     console.log(tableOperationButtonGroup);
-                    //
-                    //     item.testtest = tableOperationButtonGroup;
-                    // }
                     console.log(resultJsonArray);
 
                     $('#userTable').bootstrapTable({
@@ -358,9 +528,32 @@
                     });
 
                     $('.modifyButton').on('click', function (){
+                            var userId = $(this).attr('id').replace('modify-','');
                             $('#modifyUserModal').find('.modal-title')
-                                .text('修改成员' + $(this).attr('id').replace('modify-',''));
+                                .text('修改成员' + userId);
                             //Todo: fetch data from backend
+                            $.post('queryUser',
+                                {
+                                    userId: userId
+                                },
+                                function(userDetailResult, status){
+                                    console.log(userDetailResult);
+                                    $('#modifyUserModal #edit_userName').val(userDetailResult[0].userName);
+                                    $('#modifyUserModal #edit_userPassword').val(userDetailResult[0].userPassword);
+                                    $('#modifyUserModal #edit_userRealname').val(userDetailResult[0].userRealname);
+                                    $('#modifyUserModal #edit_userEmail').val(userDetailResult[0].userEmail);
+                                    $('#modifyUserModal #select_userRole').val(userDetailResult[0].userRole);
+                                    $('#modifyUserModal #edit_userRemarks').val(userDetailResult[0].userRemarks);
+
+                                    $('#modifyUserModal #select_user_Info_userinfo_Sex').val(userDetailResult[0].user_Info.userinfo_Sex);
+                                    $('#modifyUserModal #edit_user_Info_userinfo_Idcard_number').val(userDetailResult[0].user_Info.userinfo_Idcard_number);
+                                    $('#modifyUserModal #edit_user_Info_userinfo_Department').val(userDetailResult[0].user_Info.userinfo_Department);
+                                    $('#modifyUserModal #edit_user_Info_userinfo_Class').val(userDetailResult[0].user_Info.userinfo_Class);
+                                    $('#modifyUserModal #edit_user_Info_userinfo_Home_address').val(userDetailResult[0].user_Info.userinfo_Home_address);
+                                    $('#modifyUserModal #edit_user_Info_userinfo_Train_station').val(userDetailResult[0].user_Info.userinfo_Train_station);
+                                }
+                            );
+
                         }
                     );
 
@@ -372,7 +565,7 @@
             );
 
             $('#addNewUserButton').on('click', function (){
-
+                    // Nothing to do
                 }
             );
 
@@ -382,7 +575,11 @@
                 }
             );
 
-
+            $('#addNewUserModalSaveButton').on('click', function (){
+                    //Todo: upload data to backend
+                    $('#addNewUserModal').modal('toggle');
+                }
+            );
         }
     );
 </script>

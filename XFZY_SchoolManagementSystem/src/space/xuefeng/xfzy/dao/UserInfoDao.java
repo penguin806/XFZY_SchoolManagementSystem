@@ -16,12 +16,12 @@ public class UserInfoDao {
     }
 
 
-    public ResultSet queryExistingUserByUserName(Connection databaseConnection, String username) throws Exception
+    public ResultSet queryExistingUserByUserId(Connection databaseConnection, String userId) throws Exception
     {
-        String selectStatement = "SELECT `id`, `username`, `password`, `realname`, `email`, `role`, `remarks` FROM `user` WHERE `username` LIKE ?";
+        String selectStatement = "SELECT * FROM `user`,`user_info` WHERE `id` = ? AND `user`.`username` = `user_info`.`username` ";
         PreparedStatement selectPrepared = databaseConnection.prepareStatement(selectStatement);
-        String usernamePattern = "%" + username + '%';
-        selectPrepared.setString(1, usernamePattern);
+//        String usernamePattern = "%" + username + '%';
+        selectPrepared.setString(1, userId);
         return selectPrepared.executeQuery();
     }
 
