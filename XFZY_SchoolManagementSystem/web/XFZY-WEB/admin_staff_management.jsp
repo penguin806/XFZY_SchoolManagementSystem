@@ -311,7 +311,7 @@
                             <!-- /.row-->
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <div class="someFieldEmptyError" class="alert alert-danger" role="alert">用户名、密码、真实姓名、邮箱为必填项</div>
+                                    <div class="someFieldEmptyError alert alert-danger" role="alert">用户名、密码、真实姓名、邮箱为必填项</div>
                                 </div>
                             </div>
                             <!-- /.row-->
@@ -454,7 +454,7 @@
                             <!-- /.row-->
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <div class="someFieldEmptyError" class="alert alert-danger" role="alert">用户名、密码、真实姓名、邮箱为必填项</div>
+                                    <div class="someFieldEmptyError alert alert-danger" role="alert">用户名、密码、真实姓名、邮箱为必填项</div>
                                 </div>
                             </div>
                             <!-- /.row-->
@@ -463,6 +463,27 @@
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">关闭</button>
                             <button id="modifyUserModalSaveButton" class="btn btn-success" type="button">保存</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content-->
+                </div>
+                <!-- /.modal-dialog-->
+            </div>
+            <div class="modal fade" id="confirmDeleteUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-modal="true">
+                <div class="modal-dialog modal-danger" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">警告</h4>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>请问您真的确定删除此用户吗?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">不了</button>
+                            <button id="confirmUserDeleteModalYesButton" class="btn btn-danger" type="button">是的</button>
                         </div>
                     </div>
                     <!-- /.modal-content-->
@@ -547,11 +568,6 @@
                             onPostBody: function (data) {
                                 $('body').on('click', '.modifyButton', function (){
                                         var userId = $(this).attr('id').replace('modify-','');
-                                        if(isNaN(userId))
-                                        {
-                                            alert('Invalid user id');
-                                            return;
-                                        }
                                         $('#modifyUserModal').find('.modal-title')
                                             .text('修改成员' + userId);
 
@@ -586,23 +602,10 @@
 
                                 $('body').on('click', '.deleteButton', function (){
                                         var userId = $(this).attr('id').replace('delete-','');
-                                        if(isNaN(userId))
-                                        {
-                                            alert('Invalid user id');
-                                            return;
-                                        }
-                                        console.log('POST: deleteUser + ' + userId);
+                                        $('#confirmDeleteUserModal').find('.modal-title').text('警告ID: ' + userId);
+                                        $('#confirmDeleteUserModal').modal('show');
 
-                                        $.post('deleteUser', {
-                                                userToDelete: userId
-                                            },
-                                            function (data, status){
-                                                console.log(status, data);
-                                                loadUserTableFromBackend();
-                                            }
-                                        );
                                     }
-
                                 );
                             }
                         });
@@ -610,11 +613,10 @@
                     'json'
                 );
                 /*Callback for post end*/
+                $('.someFieldEmptyError').hide();
             }
 
             loadUserTableFromBackend();
-
-            $('#addNewUserModal,#modifyUserModal .someFieldEmptyError').hide();
 
             $('#addNewUserButton').on('click', function (){
                     $('#addNewUserButton').find('.modal-title')
@@ -664,7 +666,7 @@
                         function (data, status) {
                             console.info('#modifyUserModalSaveButton .click:' + data);
                             $('#modifyUserModal').modal('toggle');
-
+                            $('#userTable').bootstrapTable('destroy');
                             loadUserTableFromBackend();
                         }
                     );
@@ -704,7 +706,31 @@
                         function (data, status) {
                             console.info('#addNewUserModalSaveButton .click:' + data);
                             $('#addNewUserModal').modal('toggle');
+                            $('#userTable').bootstrapTable('destroy');
+                            loadUserTableFromBackend();
+                        }
+                    );
+                }
+            );
 
+            $('#confirmUserDeleteModalYesButton').on('click', function (){
+                    var userId = $('#confirmDeleteUserModal').find('.modal-title')
+                        .text().replace('警告ID: ','');
+
+                    console.log('POST: deleteUser + ' + userId);
+                    if(isNaN(userId))
+                    {
+                        alert('Invalid user id');
+                        return;
+                    }
+
+                    $.post('deleteUser', {
+                            userToDelete: userId
+                        },
+                        function (data, status){
+                            console.log(status, data);
+                            $('#confirmDeleteUserModal').modal('hide');
+                            $('#userTable').bootstrapTable('destroy');
                             loadUserTableFromBackend();
                         }
                     );
