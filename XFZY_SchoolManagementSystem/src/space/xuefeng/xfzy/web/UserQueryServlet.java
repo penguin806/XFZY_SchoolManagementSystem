@@ -10,6 +10,7 @@ import space.xuefeng.xfzy.util.DatabaseUtil;
 import space.xuefeng.xfzy.util.ResponseUtil;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,49 @@ public class UserQueryServlet extends HttpServlet {
     UserInfoDao userInfoDao = new UserInfoDao();
     Gson gson = new Gson();
 
+    private void queryAllExsitingUsers(HttpServletResponse response, boolean queryStudentOnly){
+        Connection dbConnection = null;
+        Collection<User> usersList = new ArrayList<User>();
+
+        try {
+            dbConnection = dbUtil.getDatabaseConnection();
+            ResultSet usersQueryResult = userInfoDao.listAllUsers(dbConnection);
+            while (usersQueryResult.next())
+            {
+                User singleUser = new User();
+                singleUser.setUserRole(usersQueryResult.getString("role"));
+                if(queryStudentOnly && !singleUser.getUserRole().equals("student"))
+                {
+                    continue;
+                }
+
+                singleUser.setUserId(usersQueryResult.getString("id"));
+                singleUser.setUserName(usersQueryResult.getString("username"));
+                singleUser.setUserPassword(usersQueryResult.getString("password"));
+                singleUser.setUserRealname(usersQueryResult.getString("realname"));
+                singleUser.setUserEmail(usersQueryResult.getString("email"));
+                singleUser.setUserRemarks(usersQueryResult.getString("remarks"));
+                usersList.add(singleUser);
+            }
+
+            String resultJson = gson.toJson(usersList);
+            ResponseUtil.writeResponseData(response, resultJson);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            if(null != dbConnection)
+            {
+                try {
+                    dbUtil.closeDatabaseConnection(dbConnection);
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
     private void querySingleExistingUser(HttpServletResponse response, String userId) {
         Connection dbConnection = null;
         User singleUser = new User();
@@ -87,7 +131,7 @@ public class UserQueryServlet extends HttpServlet {
         HttpSession currentSession = request.getSession();
         if(! currentSession.getAttribute("currentRole").toString().equals("admin"))
         {
-            throw new ServletException("Access Denied!");
+//            throw new ServletException("Access Denied!");
         }
 
         String userId = request.getParameter("userId");
@@ -97,43 +141,14 @@ public class UserQueryServlet extends HttpServlet {
             return;
         }
 
-
-        Connection dbConnection = null;
-        Collection<User> usersList = new ArrayList<User>();
-
-        try {
-            dbConnection = dbUtil.getDatabaseConnection();
-            ResultSet usersQueryResult = userInfoDao.listAllUsers(dbConnection);
-            while (usersQueryResult.next())
-            {
-                User singleUser = new User();
-                singleUser.setUserId(usersQueryResult.getString("id"));
-                singleUser.setUserName(usersQueryResult.getString("username"));
-                singleUser.setUserPassword(usersQueryResult.getString("password"));
-                singleUser.setUserRealname(usersQueryResult.getString("realname"));
-                singleUser.setUserEmail(usersQueryResult.getString("email"));
-                singleUser.setUserRole(usersQueryResult.getString("role"));
-                singleUser.setUserRemarks(usersQueryResult.getString("remarks"));
-                usersList.add(singleUser);
-            }
-
-            String resultJson = gson.toJson(usersList);
-            ResponseUtil.writeResponseData(response, resultJson);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        } finally {
-            if(null != dbConnection)
-            {
-                try {
-                    dbUtil.closeDatabaseConnection(dbConnection);
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
+        String studentOnly = request.getParameter("studentOnly");
+        if(studentOnly != null && !studentOnly.isEmpty())
+        {
+            queryAllExsitingUsers(response, true);
         }
-
+        else
+        {
+            queryAllExsitingUsers(response, false);
+        }
     }
 }

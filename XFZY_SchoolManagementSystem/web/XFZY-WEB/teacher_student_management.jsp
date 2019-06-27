@@ -180,7 +180,7 @@
                 <div class="modal-dialog modal-primary" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">成员</h4>
+                            <h4 class="modal-title">学生</h4>
                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
@@ -565,7 +565,7 @@
                                 $('body').on('click', '.modifyButton', function (){
                                         var userId = $(this).attr('id').replace('modify-','');
                                         $('#modifyUserModal').find('.modal-title')
-                                            .text('修改成员' + userId);
+                                            .text('修改学生' + userId);
 
                                         console.log('POST: queryUser + ' + userId);
                                         $.post('queryUser',
@@ -615,8 +615,8 @@
             loadUserTableFromBackend();
 
             $('#addNewUserButton').on('click', function (){
-                    $('#addNewUserButton').find('.modal-title')
-                        .text('添加新成员');
+                    $('#addNewUserModal').find('.modal-title')
+                        .text('添加新学生');
                 }
             );
 
@@ -624,7 +624,7 @@
                     var userToUpdateObject = {};
 
                     var userId = $('#modifyUserModal').find('.modal-title')
-                        .text().replace('修改成员','');
+                        .text().replace('修改学生','');
                     console.log(userId);
                     if(isNaN(userId))
                     {

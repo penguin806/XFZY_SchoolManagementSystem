@@ -230,7 +230,7 @@
                                         <select class="form-control" id="addnew_select_userRole">
                                             <option value="admin">admin</option>
                                             <option value="teacher">teacher</option>
-                                            <option value="student">student</option>
+                                            <option value="student" selected="selected">student</option>
                                         </select>
                                     </div>
                                 </div>
@@ -610,7 +610,7 @@
             loadUserTableFromBackend();
 
             $('#addNewUserButton').on('click', function (){
-                    $('#addNewUserButton').find('.modal-title')
+                    $('#addNewUserModal').find('.modal-title')
                         .text('添加新成员');
                 }
             );

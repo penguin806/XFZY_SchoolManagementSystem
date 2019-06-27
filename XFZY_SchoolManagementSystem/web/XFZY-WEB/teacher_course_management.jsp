@@ -399,7 +399,7 @@
             loadCourseTableFromBackend();
 
             $('#addNewCourseButton').on('click', function (){
-                    $('#addNewCourseButton').find('.modal-title')
+                    $('#addNewCourseModal').find('.modal-title')
                         .text('添加新课程');
                 }
             );
