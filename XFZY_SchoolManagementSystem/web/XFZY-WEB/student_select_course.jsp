@@ -295,7 +295,7 @@
             {
                 /*Callback for post start*/
                 $.post('courseSelection', {
-                        courseSelectionOperation: 'query',
+                        courseSelectionOperation: 'query'
                     },
                     function (resultJsonArray, status) {
                         console.log('courseSelection', status, resultJsonArray);
@@ -311,20 +311,10 @@
                                             courseId: courseId
                                         };
 
-                                        console.log('POST: courseSelection/delete + ' + courseId);
-                                        $.post('courseSelection',
-                                            {
-                                                courseSelectionOperation: 'delete',
-                                                courseSelectionToDelete: JSON.stringify(courseSelectionToDeleteObject)
-                                            },
-                                            function(receivedData, status){
-                                                console.log('POST: courseSelection/delete Recv:', receivedData);
-                                                $('#allCourseTable').bootstrapTable('destroy');
-                                                loadAllCourseTableFromBackend();
-                                                $('#selectedCourseTable').bootstrapTable('destroy');
-                                                loadSelectedCourseTableFromBackend();
-                                            }
-                                        );
+                                        window.courseSelectionToDeleteObject = courseSelectionToDeleteObject;
+                                        $('#confirmDeselectCourseModal').find('.modal-title')
+                                            .text('警告ID: ' + courseSelectionToDeleteObject.courseId);
+                                        $('#confirmDeselectCourseModal').modal('show');
                                     }
 
                                 );
@@ -363,10 +353,12 @@
                                             },
                                             function(receivedData, status){
                                                 console.log('POST: courseSelection/add Recv:', receivedData);
-                                                $('#allCourseTable').bootstrapTable('destroy');
-                                                loadAllCourseTableFromBackend();
-                                                $('#selectedCourseTable').bootstrapTable('destroy');
-                                                loadSelectedCourseTableFromBackend();
+                                                setTimeout(function () {
+                                                    $('#allCourseTable').bootstrapTable('destroy');
+                                                    loadAllCourseTableFromBackend();
+                                                    $('#selectedCourseTable').bootstrapTable('destroy');
+                                                    loadSelectedCourseTableFromBackend();
+                                                }, 100);
                                             }
                                         );
                                     }
@@ -385,15 +377,32 @@
             loadSelectedCourseTableFromBackend();
 
             $('#confirmDeselectCourseModalYesButton').on('click', function (){
-                    var courseId = $('#confirmDeselectCourseModal').find('.modal-title')
-                        .text().replace('警告ID: ','');
+                    var courseSelectionToDeleteObject = window.courseSelectionToDeleteObject;
+                    delete window.courseSelectionToDeleteObject;
 
-                    if(isNaN(courseId))
+                    if(isNaN(courseSelectionToDeleteObject.courseId))
                     {
                         alert('Invalid course id');
                         return;
                     }
 
+                    console.log('POST: courseSelection/delete + ' + courseSelectionToDeleteObject.courseId);
+                    $.post('courseSelection',
+                        {
+                            courseSelectionOperation: 'delete',
+                            courseSelectionToDelete: JSON.stringify(courseSelectionToDeleteObject)
+                        },
+                        function(receivedData, status){
+                            console.log('POST: courseSelection/delete Recv:', receivedData);
+                            setTimeout(function () {
+                                $('#allCourseTable').bootstrapTable('destroy');
+                                loadAllCourseTableFromBackend();
+                                $('#selectedCourseTable').bootstrapTable('destroy');
+                                loadSelectedCourseTableFromBackend();
+                                $('#confirmDeselectCourseModal').modal('hide');
+                            }, 100);
+                        }
+                    );
 
                 }
             );
