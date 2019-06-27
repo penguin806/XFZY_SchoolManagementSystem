@@ -157,7 +157,7 @@
                                         <th data-sortable="true" data-field="courseId">ID</th>
                                         <th data-sortable="true" data-field="courseName">课程名</th>
                                         <th data-sortable="true" data-field="courseTeacherUsername">指导老师</th>
-                                        <th data-field="courseId" data-formatter="tableOperationButtonGroupFormatter">操作</th>
+                                        <th data-width="20" data-width-unit="%" data-field="courseId" data-formatter="tableOperationButtonGroupFormatter">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -324,13 +324,13 @@
         var modifyButton = $('<button/>', {
                 text: '修改',
                 id: 'modify-' + value,
-                class: 'modifyButton btn btn-secondary mr-1',
+                class: 'modifyButton btn btn-secondary snow-m-1'
             }
         );
         var deleteButton = $('<button/>', {
                 text: '删除',
                 id: 'delete-' + value,
-                class: 'deleteButton btn btn-danger'
+                class: 'deleteButton btn btn-danger snow-m-1'
             }
         );
 

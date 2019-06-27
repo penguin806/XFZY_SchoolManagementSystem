@@ -269,7 +269,7 @@
         var $selectCourseButton = $('<button/>', {
                 text: '选课',
                 id: 'select-' + value,
-                class: 'selectButton btn btn-pill btn-block btn-success',
+                class: 'selectButton btn btn-pill btn-block btn-success'
             }
         );
 
@@ -281,7 +281,7 @@
         var $deselectCourseButton = $('<button/>', {
                 text: '退课',
                 id: 'deselect-' + value,
-                class: 'deselectButton btn btn-pill btn-block btn-danger',
+                class: 'deselectButton btn btn-pill btn-block btn-danger'
             }
         );
 

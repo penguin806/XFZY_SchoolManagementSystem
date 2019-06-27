@@ -161,7 +161,7 @@
                                         <th data-field="userEmail">E-mail</th>
                                         <th data-field="userRole">角色</th>
                                         <th data-field="userRemarks">备注</th>
-                                        <th data-field="userId" data-formatter="tableOperationButtonGroupFormatter">操作</th>
+                                        <th data-width="20" data-width-unit="%" data-field="userId" data-formatter="tableOperationButtonGroupFormatter">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -522,7 +522,7 @@
         var modifyButton = $('<button/>', {
                 text: '修改',
                 id: 'modify-' + value,
-                class: 'modifyButton btn btn-secondary mr-1',
+                class: 'modifyButton btn btn-secondary snow-m-1'
             }
         );
         // modifyButton.attr('data-toggle', 'modal');
@@ -530,7 +530,7 @@
         var deleteButton = $('<button/>', {
                 text: '删除',
                 id: 'delete-' + value,
-                class: 'deleteButton btn btn-danger'
+                class: 'deleteButton btn btn-danger snow-m-1'
             }
         );
 
