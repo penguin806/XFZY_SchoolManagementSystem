@@ -140,12 +140,12 @@ public class CourseSelectionServlet extends HttpServlet {
         }
 
         if(courseSelectionOperation.equals("add")) {
-            CourseSelection courseSelectionToAdd = gson.fromJson(request.getParameter("courseSelectionToAdd").toString(),CourseSelection.class);
+            CourseSelection courseSelectionToAdd = gson.fromJson(request.getParameter("courseSelectionToAdd"), CourseSelection.class);
             courseSelectionToAdd.setStudentId(currentUserId);
             this.addCourseSelection(response, courseSelectionToAdd);
 
         } else if (courseSelectionOperation.equals("delete")) {
-            CourseSelection courseSelectionToDelete = gson.fromJson(request.getParameter("courseSelectionToDelete").toString(), CourseSelection.class);
+            CourseSelection courseSelectionToDelete = gson.fromJson(request.getParameter("courseSelectionToDelete"), CourseSelection.class);
             courseSelectionToDelete.setStudentId(currentUserId);
             this.deleteCourseSelection(response, courseSelectionToDelete);
 
