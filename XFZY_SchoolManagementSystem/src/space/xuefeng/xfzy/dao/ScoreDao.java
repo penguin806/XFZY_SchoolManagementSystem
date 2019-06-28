@@ -11,6 +11,46 @@ import java.sql.SQLException;
 
 public class ScoreDao {
 
+    public ResultSet queryAllStudentScoreOfOneCourse(Connection databaseConnection, String courseIdToQuery) throws Exception
+    {
+        /***
+         SELECT
+         `student_list`.`id`,
+         `student_list`.`username`,
+         `student_list`.`realname`,
+         `student_list`.`course_id`,
+         `score`.`score`
+         FROM
+         (
+         SELECT
+         `user`.`id`,
+         `user`.`username`,
+         `user`.`realname`,
+         `course_selection`.`course_id`
+         FROM
+         `course_selection`,
+         `user`
+         WHERE
+         `course_selection`.`course_id` = 1 AND `user`.`id` = `course_selection`.`student_id`
+         ) AS `student_list`
+         LEFT JOIN `score` ON `score`.`student_id` = `student_list`.`id` AND `score`.`student_course_id` = `student_list`.`course_id`
+         ***/
+
+        // Test query results:
+        // id	username	realname	course_id	score
+        // 18 	201630185001 	伍芳兰 	1 	85
+        // 1 	lxf 	李学锋 	1 	NULL
+
+        String selectStatement = "SELECT `student_list`.`id`, `student_list`.`username`, `student_list`.`realname`, `student_list`.`course_id`, `score`.`score` " +
+                "FROM ( SELECT `user`.`id`, `user`.`username`, `user`.`realname`, `course_selection`.`course_id` " +
+                "FROM `course_selection`, `user` WHERE `course_selection`.`course_id` = ? AND `user`.`id` = `course_selection`.`student_id` ) " +
+                "AS `student_list` LEFT JOIN `score` ON `score`.`student_id` = `student_list`.`id` AND `score`.`student_course_id` = `student_list`.`course_id` ";
+
+        PreparedStatement selectPrepared = databaseConnection.prepareStatement(selectStatement);
+        selectPrepared.setString(1, courseIdToQuery);
+        return selectPrepared.executeQuery();
+    }
+
     public ResultSet listAllScoreOfOneStudent(Connection databaseConnection, String studentId) throws Exception
     {
 //        SELECT
