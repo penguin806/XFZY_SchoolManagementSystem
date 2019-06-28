@@ -1,9 +1,7 @@
 package space.xuefeng.xfzy.web;
 
 import com.google.gson.Gson;
-import space.xuefeng.xfzy.dao.CourseDao;
 import space.xuefeng.xfzy.dao.ScoreDao;
-import space.xuefeng.xfzy.model.Course;
 import space.xuefeng.xfzy.model.Score;
 import space.xuefeng.xfzy.util.DatabaseUtil;
 import space.xuefeng.xfzy.util.ResponseUtil;
