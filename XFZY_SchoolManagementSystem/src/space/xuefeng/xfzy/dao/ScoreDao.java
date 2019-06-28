@@ -75,7 +75,7 @@ public class ScoreDao {
         return selectPrepared.executeQuery();
     }
 
-    public boolean updateExistingCourse(Connection databaseConnection, Score scoreToUpdate) throws Exception
+    public boolean updateExistingScore(Connection databaseConnection, Score scoreToUpdate) throws Exception
     {
         // First we delete the record of the specific score
         String deleteStatement = "DELETE FROM `score` WHERE `student_id` = ? AND `student_course_id` = ?";
@@ -84,10 +84,10 @@ public class ScoreDao {
         deletePrepared.setString(1, scoreToUpdate.getStudentId());
         deletePrepared.setString(2, scoreToUpdate.getStudentCourseId());
         affectedRows = deletePrepared.executeUpdate();
-        if(affectedRows != 1)
-        {
-            throw new SQLException("DELETE FROM TABLE `score` FAIL");
-        }
+//        if(affectedRows != 1)
+//        {
+//            throw new SQLException("DELETE FROM TABLE `score` FAIL");
+//        }
 
         String insertStatement = "INSERT INTO `score`(`student_id`, `student_course_id`, `score`) VALUES (?,?,?)";
         PreparedStatement insertPrepared = databaseConnection.prepareStatement(insertStatement);
