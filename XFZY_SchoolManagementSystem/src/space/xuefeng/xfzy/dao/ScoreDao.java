@@ -1,7 +1,5 @@
 package space.xuefeng.xfzy.dao;
 
-import space.xuefeng.xfzy.model.Course;
-import space.xuefeng.xfzy.model.CourseSelection;
 import space.xuefeng.xfzy.model.Score;
 
 import java.sql.Connection;

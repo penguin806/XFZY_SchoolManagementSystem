@@ -60,28 +60,7 @@ public class CourseQueryServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // super.doGet(req, resp);
-        // Not handled
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession currentSession = request.getSession();
-        if(! currentSession.getAttribute("currentRole").toString().equals("admin"))
-        {
-//            throw new ServletException("Access Denied!");
-        }
-
-        String courseId = request.getParameter("courseId");
-        if(null != courseId && !courseId.isEmpty())
-        {
-            this.querySingleExistingCourse(response, courseId);
-            return;
-        }
-
-
+    private void queryAllExistingCourse(HttpServletResponse response) {
         Connection dbConnection = null;
         Collection<Course> coursesList = new ArrayList<Course>();
 
@@ -114,6 +93,31 @@ public class CourseQueryServlet extends HttpServlet {
             }
 
         }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // super.doGet(req, resp);
+        // Not handled
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession currentSession = request.getSession();
+        if(! currentSession.getAttribute("currentRole").toString().equals("admin"))
+        {
+//            throw new ServletException("Access Denied!");
+        }
+
+        String courseId = request.getParameter("courseId");
+        if(null != courseId && !courseId.isEmpty())
+        {
+            this.querySingleExistingCourse(response, courseId);
+        }
+        else {
+            this.queryAllExistingCourse(response);
+        }
 
     }
+
 }
