@@ -16,10 +16,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <meta name="description" content="XFZY教学管理系统 - 主页">
+    <meta name="description" content="XFZY教学管理系统">
     <meta name="author" content="Snow admin@xuefeng.space">
     <meta name="keyword" content="Snow XFZY School Management 教学管理">
-    <title>XFZY教学管理系统 - 主页</title>
+    <title>XFZY教学管理系统 - 我的成绩</title>
     <!-- Icons-->
     <link rel="icon" type="image/ico" href="./img/favicon.ico" sizes="any" />
     <link href="vendors/@coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
@@ -31,11 +31,7 @@
     <link href="vendors/pace-progress/css/pace.min.css" rel="stylesheet">
     <!-- My custom styles-->
     <link href="css/snow_custom.css" rel="stylesheet">
-    <style>
-        .snow-welcome-text {
-            font-family: "-apple-system", BlinkMacSystemFont, "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "Noto Sans Japanese", "ヒラギノ角ゴ Pro W3", "メイリオ", "Hiragino Kaku Gothic ProN", "MS PGothic", Osaka, "sans-serif" !important;
-        }
-    </style>
+    <link href="css/bootstrap-table.min.css" rel="stylesheet">
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
@@ -82,17 +78,17 @@
     <div class="sidebar">
         <nav class="sidebar-nav">
             <ul class="nav">
-                <%--                <c:if test="${sessionScope.currentRole == 'admin'}">--%>
-                <% if(currentRole.equals("admin")) { %>
-                <li class="nav-title">管理员</li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_staff_management.jsp">
-                        <i class="nav-icon fa fa-users"></i> 教职工管理
-                    </a>
-                </li>
-                <% } %>
+<%--                <c:if test="${sessionScope.currentRole == 'admin'}">--%>
+    <% if(currentRole.equals("admin")) { %>
+                    <li class="nav-title">管理员</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin_staff_management.jsp">
+                            <i class="nav-icon fa fa-users"></i> 教职工管理
+                        </a>
+                    </li>
+    <% } %>
 
-                <% if(currentRole.equals("teacher") || currentRole.equals("admin")) { %>
+    <% if(currentRole.equals("teacher") || currentRole.equals("admin")) { %>
                 <li class="nav-title">教师端</li>
                 <li class="nav-item">
                     <a class="nav-link" href="teacher_course_management.jsp">
@@ -110,9 +106,9 @@
                     <a class="nav-link" href="teacher_fill_score.jsp">
                         <i class="nav-icon fa fa-tachometer"></i> 成绩录入</a>
                 </li>
-                <% } %>
+    <% } %>
 
-                <% if(currentRole.equals("student") || currentRole.equals("admin")) { %>
+    <% if(currentRole.equals("student") || currentRole.equals("admin")) { %>
                 <li class="nav-title">学生端</li>
                 <li class="nav-item">
                     <a class="nav-link" href="student_select_course.jsp">
@@ -126,7 +122,7 @@
                     <a class="nav-link" href="student_my_score.jsp">
                         <i class="nav-icon fa fa-tachometer"></i> 我的成绩</a>
                 </li>
-                <% } %>
+    <% } %>
 
             </ul>
         </nav>
@@ -136,51 +132,45 @@
         <!-- Breadcrumb-->
         <div class="container-fluid mt-4">
             <div class="animated fadeIn">
+
                 <div class="row">
                     <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fa fa-align-justify"></i> 我的成绩
+                            </div>
+                            <div class="card-body">
+                                <div id="snow-allScoreTable-toolbar" class="toolbar">
 
-                        <div class="jumbotron">
-                            <h1 class="display-3">Welcome!</h1>
-                            <p class="lead snow-welcome-text">欢迎使用XFZY教学管理系统<br>XFZYきょういくかんりシステムへようこそ〜</p>
-                            <hr class="my-4">
-                            <p>站点由雪峰云强力驱动，已平稳运行<span id="snow-site-since"></span>(●'◡'●)ﾉ</p>
-
-                            <div id="snowAccordion" data-children=".item">
-                                <div class="item">
-                                    <p class="lead">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#snowAccordion" href="#snowMoreInfoAccordion" aria-expanded="false" aria-controls="snowMoreInfoAccordion" href="#">More <i class="fa fa-angle-down"></i> </a>
-                                    </p>
-                                    <div class="collapse" id="snowMoreInfoAccordion" role="tabpanel" style="">
-                                        <ul class="">
-                                            <li>Project Repo: <a target="_blank" href="https://github.com/penguin806/XFZY_SchoolManagementSystem">https://github.com/penguin806/XFZY_SchoolManagementSystem</a> (遵循GPLv3开源协议)</li>
-                                            <li>Developer:
-                                                <ul>
-                                                    <li>湖师大信工院 2016级 李学锋</li>
-                                                    <li>湖师大信工院 2016级 张玥</li>
-                                                </ul>
-                                            </li>
-                                            <li>友链:
-                                                <ul>
-                                                    <li><a target="_blank" href="http://www.hunnu.edu.cn/">湖南师范大学</a></li>
-                                                    <li><a target="_blank" href="http://lib.hunnu.edu.cn/">湖南师范大学图书馆</a></li>
-                                                    <li><a target="_blank" href="http://www.xuefeng.space/"><s>Xuefeng's Blog</s> 年久失修_(:з」∠)_</a></li>
-                                                    <li><a target="_blank" href="https://clientarea.gigsgigscloud.com/?affid=1620">GigsGigsCloud</a></li>
-                                                    <li><a target="_blank" href="https://m.do.co/c/ea07d8436bcf">DigitalOcean</a></li>
-                                                    <li><a target="_blank" href="https://s.click.taobao.com/t?e=m%3D2%26s%3DF0RSFhWgw6IcQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClAjaYaRFNAfk8%2FoG8TVwdWCOQX07RK3CGycCFqUaxOL4%2FHavnNbDqUQK8p0JVbL%2Bb8BVF%2BG%2F2LD3qKIUZKvQyk4%2FkxFiXT%2FI5kZuVJ2zJE2c0p3fRQ0ORdflbmmsujxxDvKiBJVMc%2BOMFCM7aOFaXltYhhQs2DjqgEA%3D%3D">阿里云</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                        <p class="mb-3">使用过程中如果遇到问题，请<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=806361380&site=qq&menu=yes">联系管理员</a>。
-                                        <br>E-mail: <a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=GWl2dXhraXx3fmxwd1l-dmF0eHB1N3p2dA" style="text-decoration:none;">admin@xuefeng.space</a>
-                                        </p>
-                                    </div>
                                 </div>
+
+                                <table id="allScoreTable"
+                                       data-side-pagination="client"
+                                       data-sortable="true"
+                                       data-search="true"
+                                       data-pagination="true"
+                                       data-page-list="[10, 25, 50, 100, 200, All]"
+                                       data-toolbar=".toolbar"
+                                       class="table table-responsive-sm table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th data-sortable="false" data-field="studentCourseId">ID</th>
+                                        <th data-sortable="false" data-field="studentCourseName">课程名</th>
+                                        <th data-sortable="false" data-field="studentCourseScore">成绩</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-
                     </div>
+                    <!-- /.col-->
                 </div>
+
             </div>
+
         </div>
     </main>
 </div>
@@ -199,7 +189,10 @@
     <!--</div>-->
 </footer>
 <!-- CoreUI and necessary plugins-->
-<script src="vendors/jquery/js/jquery.min.js"></script>
+<%--<script src="vendors/jquery/js/jquery.min.js"></script>--%>
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-table.min.js"></script>
 <script src="vendors/popper.js/js/popper.min.js"></script>
 <script src="vendors/bootstrap/js/bootstrap.min.js"></script>
 <script src="vendors/pace-progress/js/pace.min.js"></script>
@@ -213,7 +206,26 @@
 <script>
     $(document).ready(
         function () {
-            show_date_time();
+
+            function loadAllScoreTableFromBackend()
+            {
+                /*Callback for post start*/
+                $.post('queryScore', {
+                        studentId: ${currentUserId}
+                    },
+                    function (resultJsonArray, status) {
+                        console.log('queryScore', status, resultJsonArray);
+
+                        $('#allScoreTable').bootstrapTable({
+                            data: resultJsonArray,
+                        });
+                    },
+                    'json'
+                );
+                /*Callback for post end*/
+            }
+
+            loadAllScoreTableFromBackend();
         }
     );
 </script>

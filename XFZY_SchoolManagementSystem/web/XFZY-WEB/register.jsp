@@ -19,6 +19,8 @@
     <!-- Main styles for this application-->
     <link href="css/style.css" rel="stylesheet">
     <link href="vendors/pace-progress/css/pace.min.css" rel="stylesheet">
+    <!-- My custom styles-->
+    <link href="css/snow_custom.css" rel="stylesheet">
 </head>
 <body class="app flex-row align-items-center">
 <div class="container">

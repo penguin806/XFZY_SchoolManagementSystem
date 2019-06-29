@@ -19,7 +19,7 @@
     <meta name="description" content="XFZY教学管理系统">
     <meta name="author" content="Snow admin@xuefeng.space">
     <meta name="keyword" content="Snow XFZY School Management 教学管理">
-    <title>XFZY教学管理系统 - 教职工管理</title>
+    <title>XFZY教学管理系统 - 学生管理</title>
     <!-- Icons-->
     <link rel="icon" type="image/ico" href="./img/favicon.ico" sizes="any" />
     <link href="vendors/@coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
@@ -137,11 +137,11 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <i class="fa fa-align-justify"></i> 教职工列表
+                                <i class="fa fa-align-justify"></i> 学生列表
                             </div>
                             <div class="card-body">
                                 <div id="snow-table-toolbar" class="toolbar">
-                                    <button id="addNewUserButton" class="btn btn-primary" data-toggle="modal" data-target="#addNewUserModal" type="button">添加新成员</button>
+                                    <button id="addNewUserButton" class="btn btn-primary" data-toggle="modal" data-target="#addNewUserModal" type="button">添加学生</button>
                                 </div>
 
                                 <table id="userTable"
@@ -159,7 +159,7 @@
 <%--                                        <th data-field="userPassword">密码</th>--%>
                                         <th data-sortable="true" data-field="userRealname">姓名</th>
                                         <th data-field="userEmail">E-mail</th>
-                                        <th data-field="userRole">角色</th>
+<%--                                        <th data-field="userRole">角色</th>--%>
                                         <th data-field="userRemarks">备注</th>
                                         <th data-width="20" data-width-unit="%" data-field="userId" data-formatter="tableOperationButtonGroupFormatter">操作</th>
                                     </tr>
@@ -180,7 +180,7 @@
                 <div class="modal-dialog modal-primary" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">成员</h4>
+                            <h4 class="modal-title">学生</h4>
                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
@@ -223,18 +223,19 @@
                                 </div>
                             </div>
                             <!-- /.row-->
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <label for="addnew_select_userRole">角色</label>
-                                        <select class="form-control" id="addnew_select_userRole">
-                                            <option value="admin">admin</option>
-                                            <option value="teacher">teacher</option>
-                                            <option value="student" selected="selected">student</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                            <!--Row for RoleSelect-->
+<%--                            <div class="row">--%>
+<%--                                <div class="col-sm-12">--%>
+<%--                                    <div class="form-group">--%>
+<%--                                        <label for="addnew_select_userRole">角色</label>--%>
+<%--                                        <select class="form-control" id="addnew_select_userRole">--%>
+<%--                                            <option value="admin">admin</option>--%>
+<%--                                            <option value="teacher">teacher</option>--%>
+<%--                                            <option value="student">student</option>--%>
+<%--                                        </select>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
                             <!-- /.row-->
                             <div class="row">
                                 <div class="col-sm-12">
@@ -366,18 +367,19 @@
                                 </div>
                             </div>
                             <!-- /.row-->
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <label for="select_userRole">角色</label>
-                                        <select class="form-control" id="select_userRole">
-                                            <option value="admin">admin</option>
-                                            <option value="teacher">teacher</option>
-                                            <option value="student">student</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                            <!--Row for RoleSelect-->
+<%--                            <div class="row">--%>
+<%--                                <div class="col-sm-12">--%>
+<%--                                    <div class="form-group">--%>
+<%--                                        <label for="select_userRole">角色</label>--%>
+<%--                                        <select class="form-control" id="select_userRole">--%>
+<%--                                            <option value="admin">admin</option>--%>
+<%--                                            <option value="teacher">teacher</option>--%>
+<%--                                            <option value="student">student</option>--%>
+<%--                                        </select>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
                             <!-- /.row-->
                             <div class="row">
                                 <div class="col-sm-12">
@@ -548,7 +550,10 @@
             {
                 // Send post request to backend <queryUser> servlet, download results in json format.
                 /*Callback for post start*/
-                $.post('queryUser', function (resultJsonArray, status) {
+                $.post('queryUser',{
+                        studentOnly: true
+                    },
+                    function (resultJsonArray, status) {
                         console.log(status, resultJsonArray);
 
                         $('#userTable').bootstrapTable({
@@ -560,7 +565,7 @@
                                 $('body').on('click', '.modifyButton', function (){
                                         var userId = $(this).attr('id').replace('modify-','');
                                         $('#modifyUserModal').find('.modal-title')
-                                            .text('修改成员' + userId);
+                                            .text('修改学生' + userId);
 
                                         console.log('POST: queryUser + ' + userId);
                                         $.post('queryUser',
@@ -574,7 +579,7 @@
                                                 $('#modifyUserModal #edit_userPassword').val(userDetailResult.userPassword);
                                                 $('#modifyUserModal #edit_userRealname').val(userDetailResult.userRealname);
                                                 $('#modifyUserModal #edit_userEmail').val(userDetailResult.userEmail);
-                                                $('#modifyUserModal #select_userRole').val(userDetailResult.userRole);
+                                                // $('#modifyUserModal #select_userRole').val(userDetailResult.userRole);
                                                 $('#modifyUserModal #edit_userRemarks').val(userDetailResult.userRemarks);
 
                                                 $('#modifyUserModal #select_user_Info_userinfo_Sex').val(userDetailResult.user_Info.userinfo_Sex);
@@ -611,7 +616,7 @@
 
             $('#addNewUserButton').on('click', function (){
                     $('#addNewUserModal').find('.modal-title')
-                        .text('添加新成员');
+                        .text('添加新学生');
                 }
             );
 
@@ -619,7 +624,7 @@
                     var userToUpdateObject = {};
 
                     var userId = $('#modifyUserModal').find('.modal-title')
-                        .text().replace('修改成员','');
+                        .text().replace('修改学生','');
                     console.log(userId);
                     if(isNaN(userId))
                     {
@@ -631,7 +636,8 @@
                     userToUpdateObject.userPassword = $('#modifyUserModal #edit_userPassword').val();
                     userToUpdateObject.userRealname = $('#modifyUserModal #edit_userRealname').val();
                     userToUpdateObject.userEmail = $('#modifyUserModal #edit_userEmail').val();
-                    userToUpdateObject.userRole = $('#modifyUserModal #select_userRole').val();
+                    // userToUpdateObject.userRole = $('#modifyUserModal #select_userRole').val();
+                    userToUpdateObject.userRole = 'student';
                     userToUpdateObject.userRemarks = $('#modifyUserModal #edit_userRemarks').val();
                     userToUpdateObject.user_Info = { };
 
@@ -671,7 +677,8 @@
                     userToAddObject.userPassword = $('#addNewUserModal #addnew_userPassword').val();
                     userToAddObject.userRealname = $('#addNewUserModal #addnew_userRealname').val();
                     userToAddObject.userEmail = $('#addNewUserModal #addnew_userEmail').val();
-                    userToAddObject.userRole = $('#addNewUserModal #addnew_select_userRole').val();
+                    // userToAddObject.userRole = $('#addNewUserModal #addnew_select_userRole').val();
+                    userToAddObject.userRole = 'student';
                     userToAddObject.userRemarks = $('#addNewUserModal #addnew_userRemarks').val();
                     userToAddObject.user_Info = { };
 
