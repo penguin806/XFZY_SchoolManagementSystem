@@ -11,7 +11,23 @@ public class ClassDao {
 
     public ResultSet listAllClasses(Connection databaseConnection) throws Exception
     {
-        String selectStatement = "SELECT `class_id`, `class_name`, COUNT(`class_name`) AS `class_student_num` FROM `class`,`user_info` WHERE `class`.`class_name` = `user_info`.`class` ";
+//        SELECT
+//        `class_id`,
+//                `class_name`,
+//                COUNT(`class`) AS `class_student_num`
+//        FROM
+//        `class`
+//        LEFT JOIN `user_info` ON `class`.`class_name` = `user_info`.`class`
+//        GROUP BY
+//        `class_name`
+
+//        Test query results:
+//        class_id	class_name	class_student_num
+//        1 	16计算机科学与技术(师范) 	3
+//        2 	19计算机科学与技术 	0
+
+        String selectStatement = "SELECT `class_id`, `class_name`, COUNT(`class`) AS `class_student_num` " +
+                "FROM `class` LEFT JOIN `user_info` ON `class`.`class_name` = `user_info`.`class` GROUP BY `class_name`";
         PreparedStatement selectPrepared = databaseConnection.prepareStatement(selectStatement);
         return selectPrepared.executeQuery();
     }
