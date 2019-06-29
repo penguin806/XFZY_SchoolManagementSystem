@@ -31,6 +31,11 @@
     <link href="vendors/pace-progress/css/pace.min.css" rel="stylesheet">
     <!-- My custom styles-->
     <link href="css/snow_custom.css" rel="stylesheet">
+    <style>
+        .snow-welcome-text {
+            font-family: "-apple-system", BlinkMacSystemFont, "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "Noto Sans Japanese", "ヒラギノ角ゴ Pro W3", "メイリオ", "Hiragino Kaku Gothic ProN", "MS PGothic", Osaka, "sans-serif" !important;
+        }
+    </style>
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
@@ -131,8 +136,50 @@
         <!-- Breadcrumb-->
         <div class="container-fluid mt-4">
             <div class="animated fadeIn">
+                <div class="row">
+                    <div class="col-lg-12">
 
+                        <div class="jumbotron">
+                            <h1 class="display-3">Welcome!</h1>
+                            <p class="lead snow-welcome-text">欢迎使用XFZY教学管理系统<br>XFZYきょういくかんりシステムへようこそ〜</p>
+                            <hr class="my-4">
+                            <p>站点由雪峰云强力驱动，已平稳运行<span id="snow-site-since"></span>(●'◡'●)ﾉ</p>
 
+                            <div id="snowAccordion" data-children=".item">
+                                <div class="item">
+                                    <p class="lead">
+                                        <a class="collapsed" data-toggle="collapse" data-parent="#snowAccordion" href="#snowMoreInfoAccordion" aria-expanded="false" aria-controls="snowMoreInfoAccordion" href="#">More <i class="fa fa-angle-down"></i> </a>
+                                    </p>
+                                    <div class="collapse" id="snowMoreInfoAccordion" role="tabpanel" style="">
+                                        <ul class="">
+                                            <li>Project Repo: <a target="_blank" href="https://github.com/penguin806/XFZY_SchoolManagementSystem">https://github.com/penguin806/XFZY_SchoolManagementSystem</a> (遵循GPLv3开源协议)</li>
+                                            <li>Developer:
+                                                <ul>
+                                                    <li>湖师大信工院 2016级 李学锋</li>
+                                                    <li>湖师大信工院 2016级 张玥</li>
+                                                </ul>
+                                            </li>
+                                            <li>友链:
+                                                <ul>
+                                                    <li><a target="_blank" href="http://www.hunnu.edu.cn/">湖南师范大学</a></li>
+                                                    <li><a target="_blank" href="http://lib.hunnu.edu.cn/">湖南师范大学图书馆</a></li>
+                                                    <li><a target="_blank" href="http://www.xuefeng.space/"><s>Xuefeng's Blog</s> 年久失修_(:з」∠)_</a></li>
+                                                    <li><a target="_blank" href="https://clientarea.gigsgigscloud.com/?affid=1620">GigsGigsCloud</a></li>
+                                                    <li><a target="_blank" href="https://m.do.co/c/ea07d8436bcf">DigitalOcean</a></li>
+                                                    <li><a target="_blank" href="https://s.click.taobao.com/t?e=m%3D2%26s%3DF0RSFhWgw6IcQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClAjaYaRFNAfk8%2FoG8TVwdWCOQX07RK3CGycCFqUaxOL4%2FHavnNbDqUQK8p0JVbL%2Bb8BVF%2BG%2F2LD3qKIUZKvQyk4%2FkxFiXT%2FI5kZuVJ2zJE2c0p3fRQ0ORdflbmmsujxxDvKiBJVMc%2BOMFCM7aOFaXltYhhQs2DjqgEA%3D%3D">阿里云</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                        <p class="mb-3">使用过程中如果遇到问题，请<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=806361380&site=qq&menu=yes">联系管理员</a>。
+                                        <br>E-mail: <a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=GWl2dXhraXx3fmxwd1l-dmF0eHB1N3p2dA" style="text-decoration:none;">admin@xuefeng.space</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -163,5 +210,12 @@
 <script src="vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/js/custom-tooltips.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/snow_custom.js"></script>
+<script>
+    $(document).ready(
+        function () {
+            show_date_time();
+        }
+    );
+</script>
 </body>
 </html>
