@@ -328,7 +328,7 @@
                 userToUpdateObject.userRealname = $('#currentUserInfoContainer #edit_userRealname').val();
                 userToUpdateObject.userEmail = $('#currentUserInfoContainer #edit_userEmail').val();
                 userToUpdateObject.userRole = currentUserRole;
-                userToUpdateObject.userRemarks = $('#currentUserInfoContainer #edit_userRemarks').val();
+                userToUpdateObject.userRemarks = $('#currentUserInfoContainer').attr('data-userRemarks');
                 userToUpdateObject.user_Info = { };
 
                 userToUpdateObject.user_Info.userinfo_Sex = $('#currentUserInfoContainer #select_user_Info_userinfo_Sex').val();
@@ -400,7 +400,7 @@
                         $('#currentUserInfoContainer #edit_userPassword').val(userDetailResult.userPassword);
                         $('#currentUserInfoContainer #edit_userRealname').val(userDetailResult.userRealname);
                         $('#currentUserInfoContainer #edit_userEmail').val(userDetailResult.userEmail);
-                        $('#currentUserInfoContainer #edit_userRemarks').val(userDetailResult.userRemarks);
+                        $('#currentUserInfoContainer').attr('data-userRemarks', userDetailResult.userRemarks);
 
                         $('#currentUserInfoContainer #select_user_Info_userinfo_Sex').val(userDetailResult.user_Info.userinfo_Sex);
                         $('#currentUserInfoContainer #edit_user_Info_userinfo_Idcard_number').val(userDetailResult.user_Info.userinfo_Idcard_number);
