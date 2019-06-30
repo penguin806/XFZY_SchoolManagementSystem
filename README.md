@@ -1,1 +1,3 @@
 # XFZY_SchoolManagementSystem
+
+![LXFZY_SchoolManagementSystem_HomePage.png](Screenshots/LXFZY_SchoolManagementSystem_HomePage.png)
